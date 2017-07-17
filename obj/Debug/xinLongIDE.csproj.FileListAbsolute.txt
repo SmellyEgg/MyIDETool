@@ -1,0 +1,9 @@
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\bin\Debug\xinLongIDE.exe.config
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\bin\Debug\xinLongIDE.exe
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\bin\Debug\xinLongIDE.pdb
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.csprojResolveAssemblyReference.cache
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.Form1.resources
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.Properties.Resources.resources
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.csproj.GenerateResource.Cache
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.exe
+c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.pdb
