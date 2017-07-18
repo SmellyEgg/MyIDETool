@@ -7,3 +7,6 @@ c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\o
 c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.csproj.GenerateResource.Cache
 c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.exe
 c:\users\choujidan\documents\visual studio 2015\Projects\xinLongIDE\xinLongIDE\obj\Debug\xinLongIDE.pdb
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\xinLongIDE.exe.config
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.exe
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.pdb
