@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="SmellyEggCrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\SmellyEggCrypt.dll</HintPath>
@@ -51,7 +55,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\BaseController.cs" />
+    <Compile Include="Controller\CacheController.cs" />
+    <Compile Include="Controller\ClassDecode.cs" />
     <Compile Include="Controller\ConnectionController.cs" />
+    <Compile Include="Controller\dataDic\dataAccessDictionary.cs" />
     <Compile Include="Controller\JsonManager.cs" />
     <Compile Include="Controller\xml\configManager.cs" />
     <Compile Include="Controller\xml\xmlController.cs" />
@@ -61,8 +69,15 @@
     <Compile Include="Demo\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Interface\IDataAccess.cs" />
     <Compile Include="Model\requestJson\BaseRequestJson.cs" />
-    <Compile Include="Model\returnJson\BaseRetunJson.cs" />
+    <Compile Include="Model\requestJson\groupCreateRequest.cs" />
+    <Compile Include="Model\requestJson\pageGroupData.cs" />
+    <Compile Include="Model\returnJson\BaseReturnJson.cs" />
+    <Compile Include="Model\requestJson\User.cs" />
+    <Compile Include="Model\returnJson\groupCreateReturn.cs" />
+    <Compile Include="Model\returnJson\pageGroupReturnData.cs" />
+    <Compile Include="Model\returnJson\UserData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Demo\Form1.resx">
@@ -77,6 +92,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

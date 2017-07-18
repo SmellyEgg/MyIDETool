@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace xinLongIDE.Model.requestJson
 {
-    /// <summary>
-    /// 请求基类
-    /// </summary>
-    public class BaseRequestJson
+    public class pageGroupData
     {
-        public string api_type = string.Empty;
-        public object data;
+        public string platform = string.Empty;
+
+        public pageGroupData(string plat)
+        {
+            this.platform = plat;
+        }
     }
 }

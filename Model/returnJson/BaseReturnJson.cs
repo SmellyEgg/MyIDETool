@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace xinLongIDE.Model.returnJson
 {
-    public class BaseRetunJson
+    public class BaseReturnJson
     {
+        public string api_type = string.Empty;
+        public object data;
     }
 }

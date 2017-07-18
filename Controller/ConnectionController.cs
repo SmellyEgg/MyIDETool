@@ -16,6 +16,15 @@ namespace xinLongIDE.Controller
         /// </summary>
         private string _urlService = string.Empty;
 
+        /// <summary>
+        /// json业务层
+        /// </summary>
+        private JsonManager _jsManager;
+
+        public ConnectionController()
+        {
+            _jsManager = new JsonManager();
+        }
 
         /// <summary>
         /// 获取服务地址
@@ -63,17 +72,35 @@ namespace xinLongIDE.Controller
                             result = reader.ReadToEnd();
                         }
                     }
-
                 }
             }
             return result;
         }
 
-        public object GetSqlResult(object obj, Type type)
+        /// <summary>
+        /// 调用服务获取返回结果
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public object GetSqlResult(object obj)
         {
-            string jsonText = JsonManager.SerializeToJson(obj);
+            string jsonText = _jsManager.SerializeToJson(obj);
             string returnStr = this.Post(jsonText);
-            return JsonManager.DeSerializeToObject(jsonText, type);
+            return _jsManager.DeSerializeToObject(jsonText);
+        }
+
+
+        public string getReturnStr(object obj)
+        {
+            string jsonText = _jsManager.SerializeToJson(obj);
+            return this.Post(jsonText);
+        }
+        public void Dispose()
+        {
+            if (!object.Equals(_jsManager, null))
+            {
+                _jsManager = null;
+            }
         }
 
     }

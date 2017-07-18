@@ -19,49 +19,28 @@ namespace xinLongIDE.Controller
         /// <typeparam name="T"></typeparam>
         /// <param name="objectToSerialize"></param>
         /// <returns></returns>
-        public static string SerializeToJson<T>(T objectToSerialize) where T : class
+        public string SerializeToJson<T>(T objectToSerialize) where T : class
         {
             if (objectToSerialize == null)
             {
-                throw new ArgumentException("objectToSerialize must not be null");
+                return string.Empty;
             }
-            MemoryStream ms = null;
-            try
-            {
-                DataContractJsonSerializer serializer = new DataContractJsonSerializer(objectToSerialize.GetType());
-                ms = new MemoryStream();
-                serializer.WriteObject(ms, objectToSerialize);
-                return Encoding.UTF8.GetString(ms.ToArray());
-            }
-            finally
-            {
-                if (ms != null)
-                {
-                    ms.Close();
-                }
-            }
-
-            //return Newtonsoft.Json.JsonConvert.SerializeObject(objectToSerialize);
+            string output = Newtonsoft.Json.JsonConvert.SerializeObject(objectToSerialize);
+            return output; 
         }
 
         /// <summary>
         /// 将json字符串转换为类实体
         /// </summary>
         /// <param name="jsontext"></param>
-        /// <param name="type"></param>
         /// <returns></returns>
-        public static object DeSerializeToObject(string jsontext, Type type) 
+        public object DeSerializeToObject(string jsontext) 
         {
             if (string.IsNullOrEmpty(jsontext))
             {
-                throw new ArgumentException("jsontext is empty or null!");
+                return null;
             }
-            using (var ms = new MemoryStream(Encoding.Unicode.GetBytes(jsontext)))
-            {
-                DataContractJsonSerializer deserializer = new DataContractJsonSerializer(type);
-                object obj = deserializer.ReadObject(ms);
-                return obj;
-            }
+            return Newtonsoft.Json.JsonConvert.DeserializeObject(jsontext);
         }
 
     }
