@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace xinLongIDE.Model.requestJson
 {
+    [Serializable]
     public class pageGroupData
     {
         public string platform = string.Empty;

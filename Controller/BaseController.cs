@@ -29,7 +29,6 @@ namespace xinLongIDE.Controller
             BaseRequestJson bj = new BaseRequestJson();
             bj.api_type = apitype;
             bj.data = obj;
-            //specilRequest = string.Format(specilRequest, apitype, );
 
             string result = _ccController.getReturnStr(bj);
             BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
@@ -50,7 +49,7 @@ namespace xinLongIDE.Controller
             return prd;
         }
 
-        /// <summary>vvvvvvvvvvvvvvvvv
+        /// <summary>
         /// 登陆
         /// </summary>
         /// <param name="user"></param>

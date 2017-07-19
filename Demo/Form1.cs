@@ -41,7 +41,7 @@ namespace xinLongIDE
             photoUploadRequest pr = new photoUploadRequest(null, "");
             //pageDetailRequest pdr = new pageDetailRequest(1, 1493086328);
             //bc.GetPageDetail(pdr);
-            bc.PhotoUpload(pr);
+            //bc.PhotoUpload(pr);
 
             //bc.GetControlConfigInfo();
 
@@ -88,6 +88,14 @@ namespace xinLongIDE
                 sql = s;
                 type = t;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            BaseController bc = new BaseController();
+            View.frmPageManager frm = new View.frmPageManager();
+            frm.ShowPages(bc.GetPageGroupInfo("app"));
+            frm.Show();
         }
     }
 }

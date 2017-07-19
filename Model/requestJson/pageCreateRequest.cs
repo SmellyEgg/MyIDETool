@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace xinLongIDE.Model.requestJson
 {
+    [Serializable]
     public class pageCreateRequest
     {
         private string groupid = string.Empty;
@@ -55,8 +56,13 @@ namespace xinLongIDE.Model.requestJson
         public pageCreateRequest(string id, string plat, string name)
         {
             this.groupid = id;
-            this.page_name = plat;
+            this.plat_form = plat;
             this.pagename = name;
+        }
+
+        public pageCreateRequest()
+        {
+
         }
     }
 }

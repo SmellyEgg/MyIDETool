@@ -18,3 +18,5 @@ C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\ob
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.csproj.GenerateResource.Cache
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\Newtonsoft.Json.dll
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\Newtonsoft.Json.xml
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.frmPageManager.resources
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.Control.frmGetInputName.resources
