@@ -71,12 +71,23 @@
     </Compile>
     <Compile Include="Interface\IDataAccess.cs" />
     <Compile Include="Model\requestJson\BaseRequestJson.cs" />
+    <Compile Include="Model\requestJson\controlUpdateRequest.cs" />
     <Compile Include="Model\requestJson\groupCreateRequest.cs" />
+    <Compile Include="Model\requestJson\groupDelereRequest.cs" />
+    <Compile Include="Model\requestJson\groupUpdateRequest.cs" />
+    <Compile Include="Model\requestJson\pageCreateRequest.cs" />
+    <Compile Include="Model\requestJson\pageDeleteRequest.cs" />
+    <Compile Include="Model\requestJson\pageDetailRequest.cs" />
     <Compile Include="Model\requestJson\pageGroupData.cs" />
+    <Compile Include="Model\requestJson\pageSaveRequest.cs" />
+    <Compile Include="Model\requestJson\photoUploadRequest.cs" />
     <Compile Include="Model\returnJson\BaseReturnJson.cs" />
     <Compile Include="Model\requestJson\User.cs" />
-    <Compile Include="Model\returnJson\groupCreateReturn.cs" />
+    <Compile Include="Model\returnJson\CommonReturn.cs" />
+    <Compile Include="Model\returnJson\controlReturnData.cs" />
+    <Compile Include="Model\returnJson\pageDetailReturnData.cs" />
     <Compile Include="Model\returnJson\pageGroupReturnData.cs" />
+    <Compile Include="Model\returnJson\photoUploadReturnData.cs" />
     <Compile Include="Model\returnJson\UserData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

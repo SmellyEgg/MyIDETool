@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace xinLongIDE.Model.returnJson
 {
-    public class groupCreateReturn
+    public class CommonReturn
     {
         public string data = string.Empty;
 

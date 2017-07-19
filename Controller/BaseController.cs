@@ -21,18 +21,40 @@ namespace xinLongIDE.Controller
             _clsDecode = new ClassDecode();
         }
 
-        public int PhotoUpload()
+        public photoUploadReturnData PhotoUpload(photoUploadRequest obj)
         {
-            //这里考虑的机制是，如果是缓存的话，就调用cachecontroller进行处理
-            //如果打算直接执行的，就直接调用connectController的一个公共方法进行执行
-            return 1;
+
+            //string specilRequest = "{\"api_type\": \"{0}\",\"data\": {\"file\": {1} \"sql\": {2},\"params\":{3}}}";
+            string apitype = dataAccessDictionary.upload;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.api_type = apitype;
+            bj.data = obj;
+            //specilRequest = string.Format(specilRequest, apitype, );
+
+            string result = _ccController.getReturnStr(bj);
+            BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
+            photoUploadReturnData pur = _clsDecode.DecodephotoUploadReturnData(brj.data.ToString());
+            return pur;
         }
 
-        public object GetPageDetail(string pageID)
+        public pageDetailReturnData GetPageDetail(pageDetailRequest obj)
         {
-            return null;
+            string apitype = dataAccessDictionary.page;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.api_type = apitype;
+            bj.data = obj;
+
+            string result = _ccController.getReturnStr(bj);
+            BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
+            pageDetailReturnData prd = _clsDecode.DecodepageDetailReturnData(brj.data.ToString());
+            return prd;
         }
 
+        /// <summary>vvvvvvvvvvvvvvvvv
+        /// 登陆
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         public UserData Login(User user)
         {
             if (object.Equals(user, null))
@@ -40,7 +62,7 @@ namespace xinLongIDE.Controller
                 return null;
             }
             //
-            string apitype = dataAccessDictionary.apiType.login.ToString();
+            string apitype = dataAccessDictionary.login;
             BaseRequestJson bj = new BaseRequestJson();
             bj.api_type = apitype;
             bj.data = user;
@@ -51,16 +73,18 @@ namespace xinLongIDE.Controller
             return null;
         }
 
-        public groupCreateReturn CreateGroup(groupCreateRequest gcr)
+        /// <summary>
+        /// 创建分组
+        /// </summary>
+        /// <param name="gcr"></param>
+        /// <returns></returns>
+        public CommonReturn CreateGroup(groupCreateRequest gcr)
         {
             BaseRequestJson brj = new BaseRequestJson();
             brj.data = gcr;
-            brj.api_type = dataAccessDictionary.apiType.groupCreate.ToString();
+            brj.api_type = dataAccessDictionary.groupCreate;
 
-            string result = _ccController.getReturnStr(brj);
-            BaseReturnJson brej = _clsDecode.DecodeBaseReturnJson(result);
-            groupCreateReturn resultReturn = _clsDecode.DecodegroupCreateReturn(brej.data.ToString());
-            return resultReturn;
+            return getCommonReturn(brj);
         }
 
         /// <summary>
@@ -70,62 +94,117 @@ namespace xinLongIDE.Controller
         /// <returns></returns>
         public pageGroupReturnData GetPageGroupInfo(string type)
         {
-            string apitype = dataAccessDictionary.apiType.groupPageGet.ToString();
+            string apitype = dataAccessDictionary.groupPageGet;
             BaseRequestJson bj = new BaseRequestJson();
             pageGroupData pgd = new pageGroupData(type);
             bj.api_type = apitype;
             bj.data = pgd;
+
             string result = _ccController.getReturnStr(bj);
             BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
             pageGroupReturnData pgr = _clsDecode.DecodepageGroupReturnData(brj.data.ToString());
             return pgr;
         }
 
-        public int UpdateGroupPageName()
+        /// <summary>
+        /// 更新组名
+        /// </summary>
+        /// <param name="pur"></param>
+        /// <returns></returns>
+        public CommonReturn UpdateGroupPageName(groupUpdateRequest pur)
         {
-            return 1;
+            string apitype = dataAccessDictionary.groupUpdate;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.data = pur;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
         }
 
-        public int DeleteGroup()
+        /// <summary>
+        /// 删除分组
+        /// </summary>
+        /// <param name="groupId"></param>
+        /// <returns></returns>
+        public CommonReturn DeleteGroup(string groupId)
         {
-            return 1;
+            string apitype = dataAccessDictionary.groupDelete;
+            BaseRequestJson bj = new BaseRequestJson();
+            groupDelereRequest gdr = new groupDelereRequest(groupId);
+            bj.data = gdr;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
         }
 
         /// <summary>
         /// 新建页面
         /// </summary>
         /// <returns></returns>
-        public int CreatePage()
+        public CommonReturn CreatePage(pageCreateRequest pcr)
         {
-            return 1;
+            string apitype = dataAccessDictionary.createPage;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.data = pcr;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
         }
 
-        public int SagePageInfo(object obj)
+        public CommonReturn SagePageInfo(pageSaveRequest obj)
         {
-            //包括控件在内的所有页面信息
-            return 1;
+            string apitype = dataAccessDictionary.savePage;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.data = obj;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
         }
 
-        public int DeletePage()
+        public CommonReturn DeletePage(string pageId)
         {
-            //删除页面，这个还没考虑好要不要本地先进行缓存？
-            //到时并发也不知道要肿么办，可以考虑加锁
-            //就是提示其他需要打开或者编辑的人说，有人还没上传，所以你无法进行更改
-            return 1;
+            string apitype = dataAccessDictionary.deletePage;
+            BaseRequestJson bj = new BaseRequestJson();
+            pageDeleteRequest pdr = new pageDeleteRequest(pageId);
+            bj.data = pdr;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
         }
 
         /// <summary>
         /// 获取工具表信息
         /// </summary>
         /// <returns></returns>
-        public object GetControlConfigInfo()
+        public controlReturnData GetControlConfigInfo()
         {
-            return null;
+            string apitype = dataAccessDictionary.getCtrl;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.api_type = apitype;
+
+            string result = _ccController.getReturnStr(bj);
+            BaseReturnJson brj = new BaseReturnJson();
+            brj = _clsDecode.DecodeBaseReturnJson(result);
+            controlReturnData cr = _clsDecode.DecodecontrolReturnData(brj.data.ToString());
+            return cr;
         }
 
-        public int UpdateControlsConfig(object obj)
+        public CommonReturn UpdateControlsConfig(controlUpdateRequest obj)
         {
-            return 1;
+            string apitype = dataAccessDictionary.updateCtrl;
+            BaseRequestJson bj = new BaseRequestJson();
+            bj.data = obj;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
+        }
+
+        private CommonReturn getCommonReturn(object obj)
+        {
+            string result = _ccController.getReturnStr(obj);
+            BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
+            CommonReturn gcr = _clsDecode.DecodegroupCreateReturn(brj.data.ToString());
+            return gcr;
         }
     }
 }

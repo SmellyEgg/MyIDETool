@@ -28,9 +28,27 @@ namespace xinLongIDE.Controller
             return m;
         }
 
-        public groupCreateReturn DecodegroupCreateReturn(string json)
+        public CommonReturn DecodegroupCreateReturn(string json)
         {
-            groupCreateReturn m = JsonConvert.DeserializeObject<groupCreateReturn>(json);
+            CommonReturn m = JsonConvert.DeserializeObject<CommonReturn>(json);
+            return m;
+        }
+
+        public controlReturnData DecodecontrolReturnData(string json)
+        {
+            controlReturnData m = JsonConvert.DeserializeObject<controlReturnData>(json);
+            return m;
+        }
+
+        public pageDetailReturnData DecodepageDetailReturnData(string json)
+        {
+            pageDetailReturnData m = JsonConvert.DeserializeObject<pageDetailReturnData>(json);
+            return m;
+        }
+
+        public photoUploadReturnData DecodephotoUploadReturnData(string json)
+        {
+            photoUploadReturnData m = JsonConvert.DeserializeObject<photoUploadReturnData>(json);
             return m;
         }
     }

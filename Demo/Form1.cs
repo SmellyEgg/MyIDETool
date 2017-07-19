@@ -21,10 +21,32 @@ namespace xinLongIDE
 
         private void button1_Click(object sender, EventArgs e)
         {
-            User user = new User("wepartner", "wepartner123");
+            //User user = new User("wepartner", "wepartner123");
             BaseController bc = new BaseController();
-            groupCreateRequest gcr = new groupCreateRequest("默认分组abc", "pc");
-            bc.CreateGroup(gcr);
+            //fieldObjeForControl dfff = new fieldObjeForControl("1", "1");
+            //controlUpdateRequest cur = new controlUpdateRequest("1", "display", dfff);
+            //bc.UpdateControlsConfig(cur);
+            //bc.Login(user);
+            //groupCreateRequest gcr = new groupCreateRequest("默认分组abc", "pc");
+            //pageSaveRequest psr = new pageSaveRequest("wang111222", "210");
+            //ctrlObjForSavePage cfs = new ctrlObjForSavePage("123", "456", "hello1234", "33");
+            //ctrlObjForSavePage cfs1 = new ctrlObjForSavePage("123", "456", "world1234", "34");
+
+            //psr.ctrls = new ctrlObjForSavePage[] { cfs, cfs1 };
+
+            //bc.SagePageInfo(psr);
+            // bc.GetControlConfigInfo();
+
+
+            photoUploadRequest pr = new photoUploadRequest(null, "");
+            //pageDetailRequest pdr = new pageDetailRequest(1, 1493086328);
+            //bc.GetPageDetail(pdr);
+            bc.PhotoUpload(pr);
+
+            //bc.GetControlConfigInfo();
+
+            //pageCreateRequest gur = new pageCreateRequest("28", "pc", "yemian1");
+            //bc.CreatePage(gur);
             //ConnectionController cc = new ConnectionController();
             //this.textBox1.Text = cc.GetServiceUrl();
             //datas ds = new datas("SELECT * FROM sly_test_phone GROUP BY city", "db");
