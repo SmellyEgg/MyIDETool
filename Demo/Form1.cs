@@ -94,8 +94,10 @@ namespace xinLongIDE
         {
             BaseController bc = new BaseController();
             View.frmPageManager frm = new View.frmPageManager();
-            frm.ShowPages(bc.GetPageGroupInfo("app"));
+            frm.SetPages("app");
             frm.Show();
+            //frm.ShowPages(bc.GetPageGroupInfo("app"));
+            //frm.Show();
         }
     }
 }

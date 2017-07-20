@@ -17,5 +17,9 @@ namespace xinLongIDE.Model.requestJson
             this.group_name = name;
             this.platform = plat;
         }
+
+        public groupCreateRequest()
+        {
+        }
     }
 }
