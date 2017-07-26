@@ -633,38 +633,7 @@ namespace xinLongIDE.Model.returnJson
         public string a49 = string.Empty;
 
         public string a50 = string.Empty;
-
-        //public DetailObjForControl(string id, string type, string dd0, string dd1, string dd2)
-        //{
-        //    this.ctrl_id = id;
-        //    this.ctrl_type = type;
-        //    this.d0 = dd0;
-        //    this.d1 = dd1;
-        //    this.d2 = dd2;
-        //}
     }
-
-    //public class meaningObjForControl
-    //{
-    //    public string ctrl_id = string.Empty;
-
-    //    public string ctrl_type = string.Empty;
-
-    //    public string d0 = string.Empty;
-
-    //    public string d1 = string.Empty;
-
-    //    public string d2 = string.Empty;
-
-    //    public meaningObjForControl(string id, string type, string dd0, string dd1, string dd2)
-    //    {
-    //        this.ctrl_id = id;
-    //        this.ctrl_type = type;
-    //        this.d0 = dd0;
-    //        this.d1 = dd1;
-    //        this.d2 = dd2;
-    //    }
-    //}
 
 
 }

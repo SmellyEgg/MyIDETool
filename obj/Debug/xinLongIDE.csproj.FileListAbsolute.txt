@@ -12,7 +12,6 @@ C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\ob
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.pdb
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\xinLongIDE.exe
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\xinLongIDE.pdb
-C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.csprojResolveAssemblyReference.cache
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.Form1.resources
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.Properties.Resources.resources
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.csproj.GenerateResource.Cache
@@ -20,3 +19,8 @@ C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bi
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\Newtonsoft.Json.xml
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.frmPageManager.resources
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.Control.frmGetInputName.resources
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.frmControlProperty.resources
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.frmMainIDE.resources
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.frmToolBox.resources
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.View.frmPaintBoard.resources
+C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.csprojResolveAssemblyReference.cache

@@ -36,10 +36,15 @@ namespace xinLongIDE.Controller
             return pur;
         }
 
+        /// <summary>
+        /// 获取页面详细信息
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public pageDetailReturnData GetPageDetail(pageDetailRequest obj)
         {
             string apitype = dataAccessDictionary.page;
-            BaseRequestJson bj = new BaseRequestJson();
+            BaseRequestJson bj = this.GetBaseRequest();
             bj.api_type = apitype;
             bj.data = obj;
 
@@ -94,7 +99,7 @@ namespace xinLongIDE.Controller
         public pageGroupReturnData GetPageGroupInfo(string type)
         {
             string apitype = dataAccessDictionary.groupPageGet;
-            BaseRequestJson bj = new BaseRequestJson();
+            BaseRequestJson bj = this.GetBaseRequest();
             pageGroupData pgd = new pageGroupData(type);
             bj.api_type = apitype;
             bj.data = pgd;
@@ -103,6 +108,14 @@ namespace xinLongIDE.Controller
             BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
             pageGroupReturnData pgr = _clsDecode.DecodepageGroupReturnData(brj.data.ToString());
             return pgr;
+        }
+
+        private BaseRequestJson GetBaseRequest()
+        {
+            BaseRequestJson bj = new BaseRequestJson();
+            CommonLoginRequest loginRequest = new CommonLoginRequest("admin", "123456");
+            bj.auth = loginRequest;
+            return bj;
         }
 
         /// <summary>
@@ -143,7 +156,7 @@ namespace xinLongIDE.Controller
         public CommonReturn CreatePage(pageCreateRequest pcr)
         {
             string apitype = dataAccessDictionary.createPage;
-            BaseRequestJson bj = new BaseRequestJson();
+            BaseRequestJson bj = this.GetBaseRequest();
             bj.data = pcr;
             bj.api_type = apitype;
 
@@ -153,7 +166,7 @@ namespace xinLongIDE.Controller
         public CommonReturn SagePageInfo(pageSaveRequest obj)
         {
             string apitype = dataAccessDictionary.savePage;
-            BaseRequestJson bj = new BaseRequestJson();
+            BaseRequestJson bj = this.GetBaseRequest();
             bj.data = obj;
             bj.api_type = apitype;
 

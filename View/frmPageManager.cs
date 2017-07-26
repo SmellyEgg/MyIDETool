@@ -15,6 +15,13 @@ namespace xinLongIDE.View
     public partial class frmPageManager : Form
     {
         /// <summary>
+        /// 委托与事件的定义
+        /// </summary>
+        /// <param name="id"></param>
+        public delegate void delegateForSelectedNode(object page);
+        public event delegateForSelectedNode nodeSelected;
+
+        /// <summary>
         /// 当前选择的树节点
         /// </summary>
         private TreeNode _currentSelectedNode = null;
@@ -54,58 +61,46 @@ namespace xinLongIDE.View
         /// <param name="platform"></param>
         public async void SetPages(string platform)
         {
-            if (string.IsNullOrEmpty(platform))
+            this.platForm = platform;
+            if (string.IsNullOrEmpty(platForm))
             {
+                Controller.Logging.Error("PlatForm is empty!");
                 return;
             }
-            this.tvwPageGroups.Nodes.Clear();
-            this.prgPageLoad.Visible = true;
-            pageGroupReturnData request = await _pageconfigCmd.GetPageGroupInfo(platform);
+            //改成要么全部在线读取要么全部从本地读取
+            pageGroupReturnData request = await _pageconfigCmd.GetPageGroupInfo(platForm);
             this.prgPageLoad.Value = 30;
             if (!Object.Equals(request, null))
             {
-                foreach (pageGroupDetail pd in request.data)
-                {
-                    TreeNode parentNode = new TreeNode(pd.group_name);
-                    parentNode.Tag = pd.group_id;
-                    this.tvwPageGroups.Nodes.Add(parentNode);
-                    foreach (pageDetailForGroup pddsecond in pd.page_list)
-                    {
-                        TreeNode childrenNode = new TreeNode(pddsecond.page_name);
-                        childrenNode.Tag = pddsecond.page_id;
-                        parentNode.Nodes.Add(childrenNode);
-                    }
-                }
+                SetValueToTreeView(tvwOriginal, request);
+                SetValueToTreeView(this.tvwPageGroups, request);
+                //将文件中的缓存添加到页面中来
+                _pageconfigCmd.SetCacheToTreeView(this.tvwPageGroups);
             }
             else
             {
                 MessageBox.Show(_pageconfigCmd.errCode);
-                this.prgPageLoad.Visible = false;
                 return;
             }
-            this.prgPageLoad.Value = 60;
-            //将文件中的缓存添加到页面中来
-            _pageconfigCmd.SetCacheToTreeView(this.tvwPageGroups);
-            this.prgPageLoad.Value = 60;
-            this.prgPageLoad.Visible = false;
         }
 
-        /// <summary>
-        /// 新建页面
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnNewPage_Click(object sender, EventArgs e)
+        private void SetValueToTreeView(TreeView tv, pageGroupReturnData obj)
         {
-            if (object.Equals(_currentSelectedNode, null) || !object.Equals(_currentSelectedNode.Parent, null))
+            tv.Nodes.Clear();
+            foreach (pageGroupDetail pd in obj.data)
             {
-                MessageBox.Show("请先选择一个分组！");
-                return;
+                TreeNode parentNode = new TreeNode(pd.group_name);
+                parentNode.Tag = pd.group_id;
+                tv.Nodes.Add(parentNode);
+                foreach (pageDetailForGroup pddsecond in pd.page_list)
+                {
+                    TreeNode childrenNode = new TreeNode(pddsecond.page_name);
+                    childrenNode.Tag = pddsecond.page_id;
+                    parentNode.Nodes.Add(childrenNode);
+                }
             }
-
-            Boolean isParent = false;
-            AddNode(isParent);
         }
+
 
         /// <summary>
         /// 获取输入的页面或组名称
@@ -131,16 +126,6 @@ namespace xinLongIDE.View
             _currentSelectedNode = e.Node;
         }
 
-        /// <summary>
-        /// 新建分组
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnNewGroup_Click(object sender, EventArgs e)
-        {
-            Boolean isParent = true;
-            AddNode(isParent);
-        }
 
         /// <summary>
         /// 新增节点
@@ -219,6 +204,7 @@ namespace xinLongIDE.View
         public async void Upload()
         {
             int result = await _pageconfigCmd.Upload();
+
             if (result == 1)
             {
                 MessageBox.Show("上传成功！");
@@ -233,6 +219,50 @@ namespace xinLongIDE.View
         private void button2_Click(object sender, EventArgs e)
         {
             this.Upload();
+        }
+
+
+        private async void RefreshOriginalTree()
+        {
+            _pageconfigCmd.Refresh();
+            pageGroupReturnData result = await _pageconfigCmd.GetPageGroupInfo(platForm);
+            SetValueToTreeView(this.tvwOriginal, result);
+        }
+
+        private void tsrbtnNewPage_Click(object sender, EventArgs e)
+        {
+            if (object.Equals(_currentSelectedNode, null) || !object.Equals(_currentSelectedNode.Parent, null))
+            {
+                MessageBox.Show("请先选择一个分组！");
+                return;
+            }
+
+            Boolean isParent = false;
+            AddNode(isParent);
+        }
+
+        private void tsrbtnNewGroup_Click(object sender, EventArgs e)
+        {
+            Boolean isParent = true;
+            AddNode(isParent);
+        }
+
+        private void tsrRefresh_Click(object sender, EventArgs e)
+        {
+            this.RefreshOriginalTree();
+        }
+
+        private void tvwPageGroups_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            _currentSelectedNode = e.Node;
+            //将结果委托到主窗体
+            if (!object.Equals(_currentSelectedNode.Parent, null))
+            {
+                pageDetailForGroup obj = new pageDetailForGroup();
+                obj.page_id = _currentSelectedNode.Tag.ToString();
+                obj.page_name = _currentSelectedNode.Text;
+                nodeSelected.Invoke(obj);
+            }
         }
     }
 }

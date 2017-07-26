@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using xinLongIDE.Controller;
 using xinLongIDE.Model.requestJson;
+using xinLongIDE.View;
 
 namespace xinLongIDE
 {
@@ -22,7 +16,7 @@ namespace xinLongIDE
         private void button1_Click(object sender, EventArgs e)
         {
             //User user = new User("wepartner", "wepartner123");
-            BaseController bc = new BaseController();
+            //BaseController bc = new BaseController();
             //fieldObjeForControl dfff = new fieldObjeForControl("1", "1");
             //controlUpdateRequest cur = new controlUpdateRequest("1", "display", dfff);
             //bc.UpdateControlsConfig(cur);
@@ -38,7 +32,7 @@ namespace xinLongIDE
             // bc.GetControlConfigInfo();
 
 
-            photoUploadRequest pr = new photoUploadRequest(null, "");
+            //photoUploadRequest pr = new photoUploadRequest(null, "");
             //pageDetailRequest pdr = new pageDetailRequest(1, 1493086328);
             //bc.GetPageDetail(pdr);
             //bc.PhotoUpload(pr);
@@ -65,6 +59,9 @@ namespace xinLongIDE
             //bc.Login();
 
             //this.textBox1.Text = JsonManager.SerializeToJson(tt);
+
+            frmMainIDE frm = new frmMainIDE();
+            frm.Show();
         }
 
         public class testType : Model.requestJson.BaseRequestJson
@@ -94,10 +91,14 @@ namespace xinLongIDE
         {
             BaseController bc = new BaseController();
             View.frmPageManager frm = new View.frmPageManager();
-            frm.SetPages("app");
+            //frm.nodeSelected += new View.frmPageManager.delegateForSelectedNode(teset);
+            frm.SetPages(this.textBox1.Text.Trim());
             frm.Show();
-            //frm.ShowPages(bc.GetPageGroupInfo("app"));
-            //frm.Show();
+        }
+
+        private void teset(string obj)
+        {
+            this.textBox1.Text = obj;
         }
     }
 }

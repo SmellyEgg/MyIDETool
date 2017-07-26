@@ -19,6 +19,8 @@ namespace xinLongIDE.Controller.ConfigCMD
 
         private string addPageForNewGroup = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\addPageForNewGroupConfigFile.xml";
 
+        private string LocalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\localGroupInfo.xml";
+
         public string errCode = string.Empty;
 
         private List<groupCreateRequest> _lstForNewGroup = new List<groupCreateRequest>();
@@ -30,17 +32,22 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// </summary>
         public pageConfigCMD()
         {
+            Init();
+        }
+
+        public void Init()
+        {
             if (File.Exists(addGroupConfigFilePath))
             {
-                _lstForNewGroup = ReadFromXmlFile<List<groupCreateRequest>>(addGroupConfigFilePath);
+                _lstForNewGroup = xmlController.ReadFromXmlFile<List<groupCreateRequest>>(addGroupConfigFilePath);
             }
             if (File.Exists(addPageConfigFilePath))
             {
-                _lstForNewPage = ReadFromXmlFile<List<pageCreateRequest>>(addPageConfigFilePath);
+                _lstForNewPage = xmlController.ReadFromXmlFile<List<pageCreateRequest>>(addPageConfigFilePath);
             }
             if (File.Exists(addPageForNewGroup))
             {
-                _lstForNewPageWithoutGroupID = ReadFromXmlFile<List<pageCreateRequest>>(addPageForNewGroup);
+                _lstForNewPageWithoutGroupID = xmlController.ReadFromXmlFile<List<pageCreateRequest>>(addPageForNewGroup);
             }
         }
 
@@ -127,38 +134,6 @@ namespace xinLongIDE.Controller.ConfigCMD
             }
         }
 
-        public void WriteToXmlFile<T>(string filePath, T objectToWrite) where T : new()
-        {
-            TextWriter writer = null;
-            try
-            {
-                var serializer = new XmlSerializer(typeof(T));
-                writer = new StreamWriter(filePath, File.Exists(filePath) ? true : false);
-                serializer.Serialize(writer, objectToWrite);
-            }
-            finally
-            {
-                if (writer != null)
-                    writer.Close();
-            }
-        }
-
-        private T ReadFromXmlFile<T>(string filePath) where T : new()
-        {
-            TextReader reader = null;
-            try
-            {
-                var serializer = new XmlSerializer(typeof(T));
-                reader = new StreamReader(filePath);
-                return (T)serializer.Deserialize(reader);
-            }
-            finally
-            {
-                if (reader != null)
-                    reader.Close();
-            }
-        }
-
         /// <summary>
         /// 上传页面相关信息
         /// </summary>
@@ -168,9 +143,14 @@ namespace xinLongIDE.Controller.ConfigCMD
             {
                 Dictionary<string, string> dic = UploadGroup();
                 UploadPage(dic);
-                DeleteCache();
+                this.Refresh();
                 return 1;
             });
+
+        }
+
+        public void SavePage()
+        {
             
         }
 
@@ -208,8 +188,13 @@ namespace xinLongIDE.Controller.ConfigCMD
             {
                 return null;
             }
-            List<groupCreateRequest> lstGroupRequest = ReadFromXmlFile<List<groupCreateRequest>>(addGroupConfigFilePath);
+            List<groupCreateRequest> lstGroupRequest = xmlController.ReadFromXmlFile<List<groupCreateRequest>>(addGroupConfigFilePath);
+            if (lstGroupRequest.Count < 1)
+            {
+                return null;
+            }
             Dictionary<string, string> dicOfGroupName_id = new Dictionary<string, string>();
+
             foreach (groupCreateRequest obj in lstGroupRequest)
             {
                 CommonReturn cmresult = _bsController.CreateGroup(obj);
@@ -228,12 +213,14 @@ namespace xinLongIDE.Controller.ConfigCMD
         {
             if (File.Exists(addPageConfigFilePath))
             {
-                List<pageCreateRequest> lstGroupRequest = ReadFromXmlFile<List<pageCreateRequest>>(addPageConfigFilePath);
+                List<pageCreateRequest> lstGroupRequest = xmlController.ReadFromXmlFile<List<pageCreateRequest>>(addPageConfigFilePath);
 
                 foreach (pageCreateRequest obj in lstGroupRequest)
                 {
-                    _bsController.CreatePage(obj);
+                    CommonReturn returnResult = _bsController.CreatePage(obj);
+                    DemoTest(obj.page_name, returnResult.data);
                 }
+                File.Delete(addPageConfigFilePath);
             }
             //这部分是用于上传此前未有组ID的页面
             if (object.Equals(dic, null))
@@ -242,14 +229,88 @@ namespace xinLongIDE.Controller.ConfigCMD
             }
             if (File.Exists(addPageForNewGroup))
             {
-                List<pageCreateRequest> lstGroupRequestNewGroup = ReadFromXmlFile<List<pageCreateRequest>>(addPageForNewGroup);
+                List<pageCreateRequest> lstGroupRequestNewGroup = xmlController.ReadFromXmlFile<List<pageCreateRequest>>(addPageForNewGroup);
                 foreach (pageCreateRequest obj in lstGroupRequestNewGroup)
                 {
                     string groupId = dic[obj.group_id];
                     obj.group_id = groupId;
                     _bsController.CreatePage(obj);
                 }
+                File.Delete(addPageForNewGroup);
             }
+        }
+
+        private void DemoTest(string name, string id)
+        {
+            pageSaveRequest request = new pageSaveRequest(name, id);
+            ControlDetailForRequest objPage = new ControlDetailForRequest();
+            objPage.ctrl_id = "0";
+            objPage.ctrl_level = "1";
+            objPage.ctrl_type = "page";
+            objPage.d0 = "[6, 7]";
+            objPage.d1 = "100";
+            objPage.d2 = "500";
+            objPage.d3 = "100";
+            objPage.d4 = "200";
+            objPage.d6 = "12";
+
+            ControlDetailForRequest objNavigationBar = new ControlDetailForRequest();
+            objNavigationBar.ctrl_id = "1";
+            objNavigationBar.ctrl_level = "2";
+            objNavigationBar.ctrl_type = "navigationBar";
+            objNavigationBar.d0 = "[50, 51]";
+            objNavigationBar.d1 = "320";
+            objNavigationBar.d2 = "44";
+            objNavigationBar.d3 = "0";
+            objNavigationBar.d4 = "0";
+            objNavigationBar.d6 = "16";
+            objNavigationBar.d8 = "#ffffff";
+            objNavigationBar.d12 = "0";
+            objNavigationBar.d14 = "#000000";
+            objNavigationBar.d15 = "1";
+            objNavigationBar.d18 = "1";
+            objNavigationBar.d19 = "1";
+            objNavigationBar.d26 = "0";
+            objNavigationBar.d36 = "15";
+
+            ControlDetailForRequest objtext = new ControlDetailForRequest();
+            objtext.ctrl_id = "50";
+            objtext.ctrl_level = "10";
+            objtext.ctrl_type = "text";
+            objtext.d0 = "测试页";
+            objtext.d1 = "320";
+            objtext.d2 = "44";
+            objtext.d3 = "0";
+            objtext.d4 = "0";
+            objtext.d6 = "18";
+            objtext.d7 = "#22798A";
+            objtext.d8 = "#ffffff";
+            objtext.d18 = "1";
+            objtext.d19 = "1";
+            objtext.d26 = "0";
+            objtext.d36 = "15";
+
+            ControlDetailForRequest objimg = new ControlDetailForRequest();
+            objimg.ctrl_id = "51";
+            objimg.ctrl_level = "2";
+            objimg.ctrl_type = "img";
+            objimg.d0 = "http://img.sootuu.com/vector/2007-07-01/068/3/200.gif";
+            objimg.d1 = "44";
+            objimg.d2 = "44";
+            objimg.d3 = "0";
+            objimg.d4 = "0";
+            objimg.d5 = "1";
+            objimg.d6 = "11";
+            objimg.d7 = "#000000";
+            objimg.d11 = "#ffffff";
+            objimg.d18 = "1";
+            objimg.d19 = "1";
+            objimg.d26 = "0";
+            objimg.d36 = "15";
+
+            request.ctrls = new ControlDetailForRequest[] { objPage, objNavigationBar, objtext, objimg };
+
+            CommonReturn objReturn = _bsController.SagePageInfo(request);
         }
 
         /// <summary>
@@ -259,23 +320,22 @@ namespace xinLongIDE.Controller.ConfigCMD
         {
             return Task.Run(() =>
             {
-                if (!object.Equals(_lstForNewGroup, null))
+                if (!object.Equals(_lstForNewGroup, null) && _lstForNewGroup.Count > 0)
                 {
-                    WriteToXmlFile<List<groupCreateRequest>>(addGroupConfigFilePath, _lstForNewGroup);
+                    xmlController.WriteToXmlFile<List<groupCreateRequest>>(addGroupConfigFilePath, _lstForNewGroup);
                 }
-                if (!object.Equals(_lstForNewPage, null))
+                if (!object.Equals(_lstForNewPage, null) && _lstForNewPage.Count > 0)
                 {
-                    WriteToXmlFile<List<pageCreateRequest>>(addPageConfigFilePath, _lstForNewPage);
+                    xmlController.WriteToXmlFile<List<pageCreateRequest>>(addPageConfigFilePath, _lstForNewPage);
                 }
-                if (!object.Equals(_lstForNewPageWithoutGroupID, null))
+                if (!object.Equals(_lstForNewPageWithoutGroupID, null) && _lstForNewPageWithoutGroupID.Count > 0)
                 {
-                    WriteToXmlFile<List<pageCreateRequest>>(addPageForNewGroup, _lstForNewPageWithoutGroupID);
+                    xmlController.WriteToXmlFile<List<pageCreateRequest>>(addPageForNewGroup, _lstForNewPageWithoutGroupID);
                 }
                 return 1;
             });
-            
-        }
 
+        }
         /// <summary>
         /// 异步获取页面信息
         /// </summary>
@@ -285,22 +345,58 @@ namespace xinLongIDE.Controller.ConfigCMD
         {
             return Task.Run(() =>
             {
-                BaseController bc = new BaseController();
-                try
+                if (File.Exists(LocalGroupInfo))
                 {
-                    pageGroupReturnData obj = bc.GetPageGroupInfo(platForm);
-                    return obj;
+                    return GetPageGroupInfoLocal(platForm);
                 }
-                catch (Exception ex)
+                else
                 {
-                    errCode = "获取页面信息出错:" + ex.Message;
-                    return null;
+                    BaseController bc = new BaseController();
+                    try
+                    {
+                        pageGroupReturnData obj = bc.GetPageGroupInfo(platForm);
+                        xmlController.WriteToXmlFile<pageGroupReturnData>(LocalGroupInfo, obj);
+                        return obj;
+                    }
+                    catch (Exception ex)
+                    {
+                        errCode = "获取页面信息出错:" + ex.Message;
+                        return null;
+                    }
                 }
 
             });
         }
 
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        public void Refresh()
+        {
+            if (File.Exists(LocalGroupInfo))
+            {
+                File.Delete(LocalGroupInfo);
+            }
+        }
 
+        /// <summary>
+        /// 获取本地页面配置信息
+        /// </summary>
+        /// <param name="platForm"></param>
+        /// <returns></returns>
+        private pageGroupReturnData GetPageGroupInfoLocal(string platForm)
+        {
+            try
+            {
+                pageGroupReturnData obj = xmlController.ReadFromXmlFile<pageGroupReturnData>(LocalGroupInfo);
+                return obj;
+            }
+            catch (Exception ex)
+            {
+                errCode = "获取页面信息出错:" + ex.Message;
+                return null;
+            }
+        }
 
     }
 }

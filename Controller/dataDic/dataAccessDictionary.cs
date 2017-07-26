@@ -12,11 +12,17 @@ namespace xinLongIDE.Controller.data
         /// 登陆
         /// </summary>
         public static string login = "login";
-
+        /// <summary>
+        /// 上传
+        /// </summary>
         public static string upload = "upload";
-
+        /// <summary>
+        /// 执行脚本
+        /// </summary>
         public static string execute = "execute";
-
+        /// <summary>
+        /// 获取分组
+        /// </summary>
         public static string groupPageGet = "groupPageGet";
 
         public static string groupCreate = "groupCreate";

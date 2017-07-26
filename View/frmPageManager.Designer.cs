@@ -28,14 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmPageManager));
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnNewGroup = new System.Windows.Forms.Button();
-            this.btnNewPage = new System.Windows.Forms.Button();
-            this.tvwPageGroups = new System.Windows.Forms.TreeView();
-            this.prgPageLoad = new System.Windows.Forms.ProgressBar();
-            this.button1 = new System.Windows.Forms.Button();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.tsrbtnNewPage = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsrbtnNewGroup = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsrRefresh = new System.Windows.Forms.ToolStripButton();
+            this.tvwOriginal = new System.Windows.Forms.TreeView();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.prgPageLoad = new System.Windows.Forms.ProgressBar();
+            this.tvwPageGroups = new System.Windows.Forms.TreeView();
             this.panel1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -43,48 +50,104 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.toolStrip1);
+            this.panel1.Controls.Add(this.tvwOriginal);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.prgPageLoad);
-            this.panel1.Controls.Add(this.btnNewGroup);
-            this.panel1.Controls.Add(this.btnNewPage);
             this.panel1.Controls.Add(this.tvwPageGroups);
             this.panel1.Location = new System.Drawing.Point(1, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(316, 689);
+            this.panel1.Size = new System.Drawing.Size(528, 689);
             this.panel1.TabIndex = 0;
             // 
-            // btnNewGroup
+            // toolStrip1
             // 
-            this.btnNewGroup.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tsrbtnNewPage,
+            this.toolStripSeparator1,
+            this.tsrbtnNewGroup,
+            this.toolStripSeparator2,
+            this.tsrRefresh});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(528, 25);
+            this.toolStrip1.TabIndex = 8;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // tsrbtnNewPage
+            // 
+            this.tsrbtnNewPage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsrbtnNewPage.Image = ((System.Drawing.Image)(resources.GetObject("tsrbtnNewPage.Image")));
+            this.tsrbtnNewPage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsrbtnNewPage.Name = "tsrbtnNewPage";
+            this.tsrbtnNewPage.Size = new System.Drawing.Size(64, 22);
+            this.tsrbtnNewPage.Text = "newPage";
+            this.tsrbtnNewPage.Click += new System.EventHandler(this.tsrbtnNewPage_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsrbtnNewGroup
+            // 
+            this.tsrbtnNewGroup.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsrbtnNewGroup.Image = ((System.Drawing.Image)(resources.GetObject("tsrbtnNewGroup.Image")));
+            this.tsrbtnNewGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsrbtnNewGroup.Name = "tsrbtnNewGroup";
+            this.tsrbtnNewGroup.Size = new System.Drawing.Size(72, 22);
+            this.tsrbtnNewGroup.Text = "newGroup";
+            this.tsrbtnNewGroup.Click += new System.EventHandler(this.tsrbtnNewGroup_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsrRefresh
+            // 
+            this.tsrRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.tsrRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsrRefresh.Image")));
+            this.tsrRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsrRefresh.Name = "tsrRefresh";
+            this.tsrRefresh.Size = new System.Drawing.Size(23, 22);
+            this.tsrRefresh.Text = "toolStripButton3";
+            this.tsrRefresh.Click += new System.EventHandler(this.tsrRefresh_Click);
+            // 
+            // tvwOriginal
+            // 
+            this.tvwOriginal.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnNewGroup.Location = new System.Drawing.Point(171, 26);
-            this.btnNewGroup.Name = "btnNewGroup";
-            this.btnNewGroup.Size = new System.Drawing.Size(83, 52);
-            this.btnNewGroup.TabIndex = 2;
-            this.btnNewGroup.Text = "新建组";
-            this.btnNewGroup.UseVisualStyleBackColor = true;
-            this.btnNewGroup.Click += new System.EventHandler(this.btnNewGroup_Click);
+            this.tvwOriginal.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.tvwOriginal.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tvwOriginal.ItemHeight = 30;
+            this.tvwOriginal.LineColor = System.Drawing.Color.LightSkyBlue;
+            this.tvwOriginal.Location = new System.Drawing.Point(272, 48);
+            this.tvwOriginal.Name = "tvwOriginal";
+            this.tvwOriginal.Size = new System.Drawing.Size(251, 638);
+            this.tvwOriginal.TabIndex = 6;
             // 
-            // btnNewPage
+            // button2
             // 
-            this.btnNewPage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnNewPage.Location = new System.Drawing.Point(28, 26);
-            this.btnNewPage.Name = "btnNewPage";
-            this.btnNewPage.Size = new System.Drawing.Size(87, 52);
-            this.btnNewPage.TabIndex = 1;
-            this.btnNewPage.Text = "新建页面";
-            this.btnNewPage.UseVisualStyleBackColor = true;
-            this.btnNewPage.Click += new System.EventHandler(this.btnNewPage_Click);
+            this.button2.Location = new System.Drawing.Point(201, 19);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.TabIndex = 5;
+            this.button2.Text = "测试上传";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // tvwPageGroups
+            // button1
             // 
-            this.tvwPageGroups.Location = new System.Drawing.Point(3, 94);
-            this.tvwPageGroups.Name = "tvwPageGroups";
-            this.tvwPageGroups.Size = new System.Drawing.Size(313, 592);
-            this.tvwPageGroups.TabIndex = 0;
-            this.tvwPageGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwPageGroups_AfterSelect);
+            this.button1.Location = new System.Drawing.Point(85, 19);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 4;
+            this.button1.Text = " 测试保存";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // prgPageLoad
             // 
@@ -94,35 +157,33 @@
             this.prgPageLoad.TabIndex = 3;
             this.prgPageLoad.Visible = false;
             // 
-            // button1
+            // tvwPageGroups
             // 
-            this.button1.Location = new System.Drawing.Point(28, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = " 测试保存";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(171, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "测试上传";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.tvwPageGroups.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.tvwPageGroups.Font = new System.Drawing.Font("宋体", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tvwPageGroups.ItemHeight = 30;
+            this.tvwPageGroups.LineColor = System.Drawing.Color.LightSkyBlue;
+            this.tvwPageGroups.Location = new System.Drawing.Point(3, 48);
+            this.tvwPageGroups.Name = "tvwPageGroups";
+            this.tvwPageGroups.Size = new System.Drawing.Size(251, 638);
+            this.tvwPageGroups.TabIndex = 0;
+            this.tvwPageGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwPageGroups_AfterSelect);
+            this.tvwPageGroups.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvwPageGroups_NodeMouseDoubleClick);
             // 
             // frmPageManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(318, 688);
+            this.ClientSize = new System.Drawing.Size(530, 688);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Name = "frmPageManager";
             this.Text = "页面管理";
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -131,10 +192,15 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TreeView tvwPageGroups;
-        private System.Windows.Forms.Button btnNewGroup;
-        private System.Windows.Forms.Button btnNewPage;
         private System.Windows.Forms.ProgressBar prgPageLoad;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TreeView tvwOriginal;
+        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton tsrbtnNewPage;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton tsrbtnNewGroup;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton tsrRefresh;
     }
 }

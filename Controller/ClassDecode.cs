@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using xinLongIDE.Model.returnJson;
 
 namespace xinLongIDE.Controller
 {
+    /// <summary>
+    /// 解析类
+    /// </summary>
     public class ClassDecode
     {
         public BaseReturnJson DecodeBaseReturnJson(string json)
@@ -49,6 +47,12 @@ namespace xinLongIDE.Controller
         public photoUploadReturnData DecodephotoUploadReturnData(string json)
         {
             photoUploadReturnData m = JsonConvert.DeserializeObject<photoUploadReturnData>(json);
+            return m;
+        }
+
+        public string[] DecodeArray(string json)
+        {
+            string[] m = JsonConvert.DeserializeObject<string[]>(json);
             return m;
         }
     }
