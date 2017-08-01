@@ -44,6 +44,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,30 +59,31 @@
     <Compile Include="Controller\BaseController.cs" />
     <Compile Include="Controller\CacheController.cs" />
     <Compile Include="Controller\ClassDecode.cs" />
+    <Compile Include="Controller\ConfigCMD\controlPropertyController.cs" />
     <Compile Include="Controller\ConfigCMD\pageConfigCMD.cs" />
     <Compile Include="Controller\ConfigCMD\paintBoardController.cs" />
     <Compile Include="Controller\ConfigCMD\toolboxController.cs" />
     <Compile Include="Controller\ConnectionController.cs" />
     <Compile Include="Controller\ControlCaster.cs" />
+    <Compile Include="Controller\controlConfig\ControlMoverOrResizer.cs" />
     <Compile Include="Controller\dataDic\ConfigureFilePath.cs" />
     <Compile Include="Controller\dataDic\ControlPropertyEnum.cs" />
     <Compile Include="Controller\dataDic\dataAccessDictionary.cs" />
     <Compile Include="Controller\dataDic\windowsStatusEnum.cs" />
+    <Compile Include="Controller\dataDic\xinLongyuControlType.cs" />
     <Compile Include="Controller\JsonManager.cs" />
     <Compile Include="Controller\Logging.cs" />
+    <Compile Include="Controller\Settings\I18N.cs" />
+    <Compile Include="Controller\xinLongyuConverter.cs" />
     <Compile Include="Model\Control\toolboxItem.cs" />
+    <Compile Include="Model\Page\nodeObjectTransfer.cs" />
     <Compile Include="Model\requestJson\CommonLoginRequest.cs" />
     <Compile Include="Model\requestJson\ControlDetailForRequest.cs" />
+    <Compile Include="Model\returnJson\returnStatus.cs" />
     <Compile Include="Model\Setting\FormStatusSettings.cs" />
     <Compile Include="Controller\Settings\windowsStatusController.cs" />
     <Compile Include="Controller\xml\configManager.cs" />
     <Compile Include="Controller\xml\xmlController.cs" />
-    <Compile Include="Demo\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Demo\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\requestJson\BaseRequestJson.cs" />
     <Compile Include="Model\requestJson\controlUpdateRequest.cs" />
     <Compile Include="Model\requestJson\groupCreateRequest.cs" />
@@ -113,10 +115,31 @@
     <Compile Include="View\Control\xinLongyuButton.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="View\Control\xinLongyuCommonControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\Control\xinLongyuImg.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="View\Control\xinLongyuInput.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Control\xinLongyuNavigationBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Control\xinLongyuPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Control\xinLongyuPictureBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Control\xinLongyuRtf.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="View\Control\xinLongyuText.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="View\Control\xinLongyuWebView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="View\frmControlProperty.cs">
@@ -149,9 +172,6 @@
     <Compile Include="View\frmToolBox.Designer.cs">
       <DependentUpon>frmToolBox.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Demo\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -205,6 +225,48 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\toolboxIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\webviewImage.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinLongyuList.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinLongyuTabBar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\defaultImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toolStripSave.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\toolStripUpload.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ideico.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinlongyuTimer.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinlongyuWebView.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinglongyuTextbox.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinlongyuPrgBar.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinglongyuLabel.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\xinlongyuButton.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controller\dataDic\zh_CN.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

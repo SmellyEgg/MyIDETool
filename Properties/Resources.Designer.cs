@@ -61,6 +61,26 @@ namespace xinLongIDE.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap defaultImg {
+            get {
+                object obj = ResourceManager.GetObject("defaultImg", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon ideico {
+            get {
+                object obj = ResourceManager.GetObject("ideico", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Icon refreshbtn {
@@ -77,6 +97,135 @@ namespace xinLongIDE.Properties {
             get {
                 object obj = ResourceManager.GetObject("toolboxIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap toolStripSave {
+            get {
+                object obj = ResourceManager.GetObject("toolStripSave", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap toolStripUpload {
+            get {
+                object obj = ResourceManager.GetObject("toolStripUpload", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap webviewImage {
+            get {
+                object obj = ResourceManager.GetObject("webviewImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinglongyuLabel {
+            get {
+                object obj = ResourceManager.GetObject("xinglongyuLabel", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinglongyuTextbox {
+            get {
+                object obj = ResourceManager.GetObject("xinglongyuTextbox", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinlongyuButton {
+            get {
+                object obj = ResourceManager.GetObject("xinlongyuButton", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap xinLongyuList {
+            get {
+                object obj = ResourceManager.GetObject("xinLongyuList", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinlongyuPrgBar {
+            get {
+                object obj = ResourceManager.GetObject("xinlongyuPrgBar", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap xinLongyuTabBar {
+            get {
+                object obj = ResourceManager.GetObject("xinLongyuTabBar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinlongyuTimer {
+            get {
+                object obj = ResourceManager.GetObject("xinlongyuTimer", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinlongyuWebView {
+            get {
+                object obj = ResourceManager.GetObject("xinlongyuWebView", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 # translation for Simplified Chinese
+        ///
+        ///xinLongIDE=鑫隆宇
+        ///
+        ///# Menu items
+        ///page_id=页面ID
+        ///
+        ///# Config Form
+        ///
+        ///
+        /// 的本地化字符串。
+        /// </summary>
+        internal static string zh_CN {
+            get {
+                return ResourceManager.GetString("zh_CN", resourceCulture);
             }
         }
     }

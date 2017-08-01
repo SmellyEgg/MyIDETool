@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using xinLongIDE.Model.returnJson;
 
 namespace xinLongIDE.Controller
@@ -50,9 +51,9 @@ namespace xinLongIDE.Controller
             return m;
         }
 
-        public string[] DecodeArray(string json)
+        public List<int> DecodeArray(string json)
         {
-            string[] m = JsonConvert.DeserializeObject<string[]>(json);
+            List<int> m = JsonConvert.DeserializeObject<List<int>>(json);
             return m;
         }
     }

@@ -163,7 +163,7 @@ namespace xinLongIDE.Controller
             return getCommonReturn(bj);
         }
 
-        public CommonReturn SagePageInfo(pageSaveRequest obj)
+        public CommonReturn SavePageInfo(pageSaveRequest obj)
         {
             string apitype = dataAccessDictionary.savePage;
             BaseRequestJson bj = this.GetBaseRequest();

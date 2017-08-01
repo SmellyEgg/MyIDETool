@@ -1,14 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using xinLongIDE.Controller.dataDic;
-using xinLongIDE.Properties;
 
 namespace xinLongIDE.View
 {
@@ -39,12 +33,20 @@ namespace xinLongIDE.View
             _formToolBox.MdiParent = this;
             _formToolBox.Show();
         }
-
+        /// <summary>
+        /// 控件属性
+        /// </summary>
         private void ShowPageControlProperty()
         {
             _formControlProperty = new frmControlProperty();
+            _formControlProperty.controlPropertyChange += _formControlProperty_controlPropertyChange;
             _formControlProperty.MdiParent = this;
             _formControlProperty.Show();
+        }
+
+        private void _formControlProperty_controlPropertyChange(object obj)
+        {
+            _formPaintBoard.SetControlProperty(obj);
         }
 
         /// <summary>
@@ -63,8 +65,20 @@ namespace xinLongIDE.View
         private void ShowPagePaintBoard()
         {
             _formPaintBoard = new frmPaintBoard();
+            _formPaintBoard.progressChange += ChangeProgressValue;
+            _formPaintBoard.controlPropertyChange += _formPaintBoard_controlPropertyChange;
             _formPaintBoard.MdiParent = this;
             _formPaintBoard.Show();
+        }
+
+        private void _formPaintBoard_controlPropertyChange(object obj)
+        {
+            _formControlProperty.SetControlProperty(obj);
+        }
+
+        private void ChangeProgressValue(int value)
+        {
+            this.prgStatus.Value = value;
         }
 
         private void ShowPageInfo(object obj)
@@ -129,5 +143,36 @@ namespace xinLongIDE.View
         }
         #endregion
 
+        /// <summary>
+        /// 保存缓存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsbtnSave_Click(object sender, EventArgs e)
+        {
+            //画板缓存
+            _formPaintBoard.SaveCache();
+            //组管理缓存
+            _formPageManager.SaveCache();
+
+            MessageBox.Show("保存成功！");
+        }
+
+        /// <summary>
+        /// 上传
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void tsbtnUpload_Click(object sender, EventArgs e)
+        {
+            if (_formPaintBoard.Upload() == 1)
+            {
+                MessageBox.Show("上传成功！");
+            }
+            else
+            {
+                MessageBox.Show("上传失败！");
+            }
+        }
     }
 }

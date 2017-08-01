@@ -1,0 +1,33 @@
+﻿# translation for Simplified Chinese
+
+xinLongIDE=鑫隆宇
+
+# Property items
+page_id=页面ID
+ctrl_id=控件ID
+ctrl_level=画布层级
+ctrl_type=控件类型
+ctrl_name=控件名称
+version=版本号
+d0=通用属性
+d1=宽度
+d2=高度
+d3=X坐标
+d4=Y坐标
+d6=字体大小
+d7=字体颜色
+d8=背景颜色
+d9=内容对齐
+d10=选中时背景颜色
+d11=选中时字体颜色
+d12=是否自适应高度
+d13=提示语
+d14=边框颜色
+d15=边框宽度
+d16=键盘类型
+d17=子控件ID列表
+
+
+# Config Form
+
+

@@ -9,23 +9,21 @@ namespace xinLongIDE.Model.requestJson
 
     public class ControlDetailForRequest
     {
-        public string ctrl_id = string.Empty;
+        public int ctrl_id = -1;
 
-        public string ctrl_level = string.Empty;
+        public int ctrl_level = -1;
 
         public string ctrl_type = string.Empty;
 
-        public string id = string.Empty;
-
         public string d0 = string.Empty;
 
-        public string d1 = string.Empty;
+        public int d1 = -1;
 
-        public string d2 = string.Empty;
+        public int d2 = -1;
 
-        public string d3 = string.Empty;
+        public int d3 = -1;
 
-        public string d4 = string.Empty;
+        public int d4 = -1;
 
         public string d5 = string.Empty;
 

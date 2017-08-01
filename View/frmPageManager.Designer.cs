@@ -37,7 +37,6 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsrRefresh = new System.Windows.Forms.ToolStripButton();
             this.tvwOriginal = new System.Windows.Forms.TreeView();
-            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.prgPageLoad = new System.Windows.Forms.ProgressBar();
             this.tvwPageGroups = new System.Windows.Forms.TreeView();
@@ -53,7 +52,6 @@
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.toolStrip1);
             this.panel1.Controls.Add(this.tvwOriginal);
-            this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.prgPageLoad);
             this.panel1.Controls.Add(this.tvwPageGroups);
@@ -82,8 +80,8 @@
             this.tsrbtnNewPage.Image = ((System.Drawing.Image)(resources.GetObject("tsrbtnNewPage.Image")));
             this.tsrbtnNewPage.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsrbtnNewPage.Name = "tsrbtnNewPage";
-            this.tsrbtnNewPage.Size = new System.Drawing.Size(64, 22);
-            this.tsrbtnNewPage.Text = "newPage";
+            this.tsrbtnNewPage.Size = new System.Drawing.Size(48, 22);
+            this.tsrbtnNewPage.Text = "新页面";
             this.tsrbtnNewPage.Click += new System.EventHandler(this.tsrbtnNewPage_Click);
             // 
             // toolStripSeparator1
@@ -97,8 +95,8 @@
             this.tsrbtnNewGroup.Image = ((System.Drawing.Image)(resources.GetObject("tsrbtnNewGroup.Image")));
             this.tsrbtnNewGroup.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsrbtnNewGroup.Name = "tsrbtnNewGroup";
-            this.tsrbtnNewGroup.Size = new System.Drawing.Size(72, 22);
-            this.tsrbtnNewGroup.Text = "newGroup";
+            this.tsrbtnNewGroup.Size = new System.Drawing.Size(36, 22);
+            this.tsrbtnNewGroup.Text = "新组";
             this.tsrbtnNewGroup.Click += new System.EventHandler(this.tsrbtnNewGroup_Click);
             // 
             // toolStripSeparator2
@@ -129,19 +127,9 @@
             this.tvwOriginal.Size = new System.Drawing.Size(251, 638);
             this.tvwOriginal.TabIndex = 6;
             // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(201, 19);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "测试上传";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(85, 19);
+            this.button1.Location = new System.Drawing.Point(213, 19);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 4;
@@ -180,6 +168,7 @@
             this.Controls.Add(this.panel1);
             this.Name = "frmPageManager";
             this.Text = "页面管理";
+            this.Load += new System.EventHandler(this.frmPageManager_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -193,7 +182,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TreeView tvwPageGroups;
         private System.Windows.Forms.ProgressBar prgPageLoad;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TreeView tvwOriginal;
         private System.Windows.Forms.ToolStrip toolStrip1;

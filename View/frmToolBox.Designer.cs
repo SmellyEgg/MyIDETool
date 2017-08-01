@@ -53,7 +53,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.lvwtoolboxitems);
             this.Name = "frmToolBox";
-            this.Text = "工具箱";
+            this.Text = "控件窗体";
             this.ResumeLayout(false);
 
         }

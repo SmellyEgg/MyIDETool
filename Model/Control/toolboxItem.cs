@@ -13,7 +13,13 @@ namespace xinLongIDE.Model.Control
     {
         private string itemText = string.Empty;
 
-       
+        private string controlType = string.Empty;
+
+        private Boolean visible = false;
+
+        /// <summary>
+        /// 文本信息
+        /// </summary>
         public string ItemText
         {
             get
@@ -25,10 +31,48 @@ namespace xinLongIDE.Model.Control
                 this.itemText = value;
             }
         }
+        /// <summary>
+        /// 控件类型
+        /// </summary>
+        public string ControlType
+        {
+            get
+            {
+                return controlType;
+            }
 
-        public toolboxItem(string text)
+            set
+            {
+                controlType = value;
+            }
+        }
+
+        /// <summary>
+        /// 是否显性控件
+        /// </summary>
+        public bool Visible
+        {
+            get
+            {
+                return visible;
+            }
+
+            set
+            {
+                visible = value;
+            }
+        }
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="type"></param>
+        public toolboxItem(string text,string type, Boolean isVisible)
         {
             this.itemText = text;
+            this.controlType = type;
+            this.visible = isVisible;
         }
     }
 }

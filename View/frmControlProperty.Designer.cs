@@ -28,44 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabProperty = new System.Windows.Forms.TabControl();
-            this.tabPageProperty = new System.Windows.Forms.TabPage();
-            this.tabPageEvent = new System.Windows.Forms.TabPage();
-            this.tabProperty.SuspendLayout();
+            this.pnlProperty = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
-            // tabProperty
+            // pnlProperty
             // 
-            this.tabProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.pnlProperty.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabProperty.Controls.Add(this.tabPageProperty);
-            this.tabProperty.Controls.Add(this.tabPageEvent);
-            this.tabProperty.Location = new System.Drawing.Point(1, 0);
-            this.tabProperty.Name = "tabProperty";
-            this.tabProperty.SelectedIndex = 0;
-            this.tabProperty.Size = new System.Drawing.Size(287, 725);
-            this.tabProperty.TabIndex = 0;
-            // 
-            // tabPageProperty
-            // 
-            this.tabPageProperty.Location = new System.Drawing.Point(4, 22);
-            this.tabPageProperty.Name = "tabPageProperty";
-            this.tabPageProperty.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageProperty.Size = new System.Drawing.Size(279, 699);
-            this.tabPageProperty.TabIndex = 0;
-            this.tabPageProperty.Text = "属性";
-            this.tabPageProperty.UseVisualStyleBackColor = true;
-            // 
-            // tabPageEvent
-            // 
-            this.tabPageEvent.Location = new System.Drawing.Point(4, 22);
-            this.tabPageEvent.Name = "tabPageEvent";
-            this.tabPageEvent.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageEvent.Size = new System.Drawing.Size(279, 699);
-            this.tabPageEvent.TabIndex = 1;
-            this.tabPageEvent.Text = "事件";
-            this.tabPageEvent.UseVisualStyleBackColor = true;
+            this.pnlProperty.AutoScroll = true;
+            this.pnlProperty.Location = new System.Drawing.Point(2, 0);
+            this.pnlProperty.Name = "pnlProperty";
+            this.pnlProperty.Size = new System.Drawing.Size(285, 722);
+            this.pnlProperty.TabIndex = 22;
             // 
             // frmControlProperty
             // 
@@ -73,20 +48,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(287, 722);
             this.ControlBox = false;
-            this.Controls.Add(this.tabProperty);
+            this.Controls.Add(this.pnlProperty);
             this.Name = "frmControlProperty";
             this.Text = "属性";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmControlProperty_FormClosing);
             this.Load += new System.EventHandler(this.frmControlProperty_Load);
-            this.tabProperty.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TabControl tabProperty;
-        private System.Windows.Forms.TabPage tabPageProperty;
-        private System.Windows.Forms.TabPage tabPageEvent;
+        private System.Windows.Forms.Panel pnlProperty;
     }
 }

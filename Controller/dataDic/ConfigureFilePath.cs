@@ -14,6 +14,9 @@ namespace xinLongIDE.Controller.dataDic
         /// </summary>
         public static string FormStatusConfigFilePath = Application.StartupPath + @"\WindowsStatusConfig\formConfig.xml";
 
-
+        /// <summary>
+        /// 页面细节配置文件路径文件夹
+        /// </summary>
+        public static string PageDetailFolder = Application.StartupPath + @"\PageInfo";
     }
 }

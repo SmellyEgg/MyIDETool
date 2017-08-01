@@ -9,5 +9,6 @@ namespace xinLongIDE.View.Control
 {
     public class xinLongyuNavigationBar : Panel
     {
+
     }
 }

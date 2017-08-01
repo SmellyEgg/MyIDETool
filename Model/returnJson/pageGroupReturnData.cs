@@ -23,7 +23,12 @@ namespace xinLongIDE.Model.returnJson
 
     public class pageDetailForGroup
     {
-        public string page_id = string.Empty;
+        public int page_id;
         public string page_name = string.Empty;
+        //public pageDetailForGroup(int id, string name)
+        //{
+        //    this.page_id = id;
+        //    this.page_name = name;
+        //}
     }
 }

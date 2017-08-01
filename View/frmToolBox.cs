@@ -4,10 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using xinLongIDE.Controller.ConfigCMD;
+using xinLongIDE.Controller.dataDic;
 using xinLongIDE.Model.Control;
 using static xinLongIDE.Controller.ConfigCMD.toolboxController;
 
@@ -29,11 +28,19 @@ namespace xinLongIDE.View
             this.lvwtoolboxitems.Clear();
             lvwtoolboxitems.View = System.Windows.Forms.View.List;
             ImageList imglst = _toolController.GetImageIconList();
-            imglst.ImageSize = new Size(16, 16);
+            List<string> typeValuelst = _toolController.GetAllControlTypeValue();
+            List<Boolean> controlVisibility = _toolController.GetALlControlTypeVisibility();
+            imglst.ImageSize = new Size(40, 32);
             this.lvwtoolboxitems.SmallImageList = imglst;
+
+            toolboxItem tag;
             for (int i = 0; i < imglst.Images.Count; i++)
             {
-                lvwtoolboxitems.Items.Add(new ListViewItem { ImageIndex = i, Text = ((rowsOfControlList)i).ToString() });
+                ListViewItem newItem = new ListViewItem { ImageIndex = i, Text = ((rowsOfControlList)i).ToString() };
+                tag = new toolboxItem(((rowsOfControlList)i).ToString(), typeValuelst[i], controlVisibility[i]);
+                newItem.Tag = tag;
+                lvwtoolboxitems.Items.Add(newItem);
+
             }
         }
 
@@ -50,10 +57,9 @@ namespace xinLongIDE.View
         private void lvwtoolboxitems_MouseDown(object sender, MouseEventArgs e)
         {
             var selectedItem = ((ListView)sender).HitTest(e.Location);
-            toolboxItem obj = new toolboxItem(selectedItem.Item.Text);
             if (!object.Equals(selectedItem.Item, null))
             {
-                lvwtoolboxitems.DoDragDrop(obj, DragDropEffects.Move);
+                lvwtoolboxitems.DoDragDrop(selectedItem.Item.Tag, DragDropEffects.Move);
             }
         }
     }

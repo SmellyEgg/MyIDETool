@@ -1,4 +1,4 @@
-﻿namespace xinLongIDE.View
+﻿  namespace xinLongIDE.View
 {
     partial class frmPaintBoard
     {
@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pnlPaintBoard = new System.Windows.Forms.Panel();
             this.pnlInvisible = new System.Windows.Forms.Panel();
+            this.icnTips = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // pnlPaintBoard
@@ -39,6 +41,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlPaintBoard.BackColor = System.Drawing.SystemColors.Info;
+            this.pnlPaintBoard.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnlPaintBoard.Location = new System.Drawing.Point(0, 0);
             this.pnlPaintBoard.Name = "pnlPaintBoard";
             this.pnlPaintBoard.Size = new System.Drawing.Size(379, 509);
@@ -51,11 +54,18 @@
             this.pnlInvisible.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlInvisible.AutoScroll = true;
-            this.pnlInvisible.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.pnlInvisible.Location = new System.Drawing.Point(0, 507);
+            this.pnlInvisible.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.pnlInvisible.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlInvisible.Location = new System.Drawing.Point(0, 515);
             this.pnlInvisible.Name = "pnlInvisible";
-            this.pnlInvisible.Size = new System.Drawing.Size(379, 133);
+            this.pnlInvisible.Size = new System.Drawing.Size(379, 125);
             this.pnlInvisible.TabIndex = 1;
+            // 
+            // icnTips
+            // 
+            this.icnTips.Text = "notifyIcon1";
+            this.icnTips.Visible = true;
+            this.icnTips.Icon = Properties.Resources.toolboxIcon;
             // 
             // frmPaintBoard
             // 
@@ -75,5 +85,6 @@
 
         private System.Windows.Forms.Panel pnlPaintBoard;
         private System.Windows.Forms.Panel pnlInvisible;
+        private System.Windows.Forms.NotifyIcon icnTips;
     }
 }

@@ -12,7 +12,6 @@ C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\ob
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.pdb
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\xinLongIDE.exe
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\xinLongIDE.pdb
-C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.Form1.resources
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.Properties.Resources.resources
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\obj\Debug\xinLongIDE.csproj.GenerateResource.Cache
 C:\Users\choujidan\Documents\Visual Studio 2015\Projects\xinLongIDE\MyIDETool\bin\Debug\Newtonsoft.Json.dll

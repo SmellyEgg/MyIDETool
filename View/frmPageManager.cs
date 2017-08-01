@@ -7,7 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using xinLongIDE.Controller;
 using xinLongIDE.Controller.ConfigCMD;
+using xinLongIDE.Model.Page;
 using xinLongIDE.Model.returnJson;
 
 namespace xinLongIDE.View
@@ -47,6 +49,14 @@ namespace xinLongIDE.View
         }
 
         /// <summary>
+        /// 当前组管理信息
+        /// </summary>
+        private pageGroupReturnData _currentGroupInfo;
+        /// <summary>
+        /// 当前的原始组信息
+        /// </summary>
+        private pageGroupReturnData _currentOriginalInfo;
+        /// <summary>
         /// 构造函数
         /// </summary>
         public frmPageManager()
@@ -68,14 +78,22 @@ namespace xinLongIDE.View
                 return;
             }
             //改成要么全部在线读取要么全部从本地读取
-            pageGroupReturnData request = await _pageconfigCmd.GetPageGroupInfo(platForm);
-            this.prgPageLoad.Value = 30;
-            if (!Object.Equals(request, null))
+            _currentGroupInfo = await _pageconfigCmd.GetPageGroupInfo(platForm);
+            if (!_pageconfigCmd.isReadLocal)
             {
-                SetValueToTreeView(tvwOriginal, request);
-                SetValueToTreeView(this.tvwPageGroups, request);
+                _currentOriginalInfo = _currentGroupInfo;
+            }
+            else
+            {
+                _currentOriginalInfo = await _pageconfigCmd.GetOriginalPageInfo(platForm);
+            }
+            this.prgPageLoad.Value = 30;
+            if (!Object.Equals(_currentGroupInfo, null))
+            {
+                SetValueToTreeView(this.tvwOriginal, _currentOriginalInfo);
+                SetValueToTreeView(this.tvwPageGroups, _currentGroupInfo);
                 //将文件中的缓存添加到页面中来
-                _pageconfigCmd.SetCacheToTreeView(this.tvwPageGroups);
+                //_pageconfigCmd.SetCacheToTreeView(this.tvwPageGroups);
             }
             else
             {
@@ -143,15 +161,21 @@ namespace xinLongIDE.View
             TreeNode Node = new TreeNode(nodeText);
             if (isParent)
             {
+                string groupid = _pageconfigCmd.AddGroup(nodeText, platForm, _currentGroupInfo);
+                Node.Tag = groupid;
                 this.tvwPageGroups.Nodes.Add(Node);
-                _pageconfigCmd.AddGroup(nodeText, platForm);
             }
             else
             {
+                int pageid = _pageconfigCmd.GetNewPageId(_currentGroupInfo);
+                string groupId = _currentSelectedNode.Tag.ToString();
+                _pageconfigCmd.AddPage(pageid, nodeText, groupId, PlatForm, _currentGroupInfo);
+                Node.Tag = pageid;
                 _currentSelectedNode.Nodes.Add(Node);
-                string groupId = object.Equals(_currentSelectedNode.Tag, null) ? string.Empty : _currentSelectedNode.Tag.ToString();
-                string groupName = _currentSelectedNode.Text;
-                _pageconfigCmd.AddPage(nodeText, groupId, PlatForm, groupName);
+                //string groupId = object.Equals(_currentSelectedNode.Tag, null) ? string.Empty : _currentSelectedNode.Tag.ToString();
+                //string groupId = _currentSelectedNode.Tag.ToString();
+                //string groupName = _currentSelectedNode.Text;
+                //_pageconfigCmd.AddPage(nodeText, groupId, PlatForm, groupName);
             }
         }
 
@@ -191,24 +215,11 @@ namespace xinLongIDE.View
         /// </summary>
         public async void SaveCache()
         {
-            int result = await _pageconfigCmd.SaveCache();
-            if (result == 1)
-            {
-                MessageBox.Show("保存成功！");
-            }
-        }
-
-        /// <summary>
-        /// 上传
-        /// </summary>
-        public async void Upload()
-        {
-            int result = await _pageconfigCmd.Upload();
-
-            if (result == 1)
-            {
-                MessageBox.Show("上传成功！");
-            }
+            int result = await _pageconfigCmd.SaveCache(_currentOriginalInfo, _currentGroupInfo);
+            //if (result == 1)
+            //{
+            //    MessageBox.Show("保存成功！");
+            //}
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -216,16 +227,10 @@ namespace xinLongIDE.View
             this.SaveCache();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Upload();
-        }
-
-
         private async void RefreshOriginalTree()
         {
             _pageconfigCmd.Refresh();
-            pageGroupReturnData result = await _pageconfigCmd.GetPageGroupInfo(platForm);
+            pageGroupReturnData result = await _pageconfigCmd.GetOriginalPageInfo(platForm);
             SetValueToTreeView(this.tvwOriginal, result);
         }
 
@@ -243,7 +248,7 @@ namespace xinLongIDE.View
 
         private void tsrbtnNewGroup_Click(object sender, EventArgs e)
         {
-            Boolean isParent = true;
+             Boolean isParent = true;
             AddNode(isParent);
         }
 
@@ -258,11 +263,19 @@ namespace xinLongIDE.View
             //将结果委托到主窗体
             if (!object.Equals(_currentSelectedNode.Parent, null))
             {
-                pageDetailForGroup obj = new pageDetailForGroup();
-                obj.page_id = _currentSelectedNode.Tag.ToString();
-                obj.page_name = _currentSelectedNode.Text;
+                nodeObjectTransfer obj = new nodeObjectTransfer();
+                obj.PageId = (int)_currentSelectedNode.Tag;
+                obj.GroupId = _currentSelectedNode.Parent.Tag.ToString();
+                obj.PageName = _currentSelectedNode.Text;
+                //pageDetailForGroup obj = new pageDetailForGroup();
+                //obj.page_id = (int)_currentSelectedNode.Tag;
+                //obj.page_name = _currentSelectedNode.Text;
                 nodeSelected.Invoke(obj);
             }
+        }
+
+        private void frmPageManager_Load(object sender, EventArgs e)
+        {
         }
     }
 }
