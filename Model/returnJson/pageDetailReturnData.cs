@@ -27,7 +27,7 @@ namespace xinLongIDE.Model.returnJson
 
         public string page_status = string.Empty;
 
-        public string group_id = string.Empty;
+        public int group_id = -1;
 
         public string temple_id  = string.Empty;
 
@@ -67,6 +67,8 @@ namespace xinLongIDE.Model.returnJson
 
     public class ControlDetailForPage
     {
+        //public string id = string.Empty;
+
         public int page_id = -1;
 
         public int ctrl_id = -1;

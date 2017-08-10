@@ -7,6 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using xinLongIDE.Controller.CommonController;
 using xinLongIDE.Controller.dataDic;
 using xinLongIDE.Model.requestJson;
 using xinLongIDE.Model.returnJson;
@@ -65,6 +66,7 @@ namespace xinLongIDE.Controller.ConfigCMD
                     }
                     catch (WebException e)
                     {
+                        Logging.Error(e.Message);
                         this.errorCode = -2;
                     }
                     //CachePageInfo(pd);
@@ -73,9 +75,70 @@ namespace xinLongIDE.Controller.ConfigCMD
             });
         }
 
+        /// <summary>
+        /// 缓存页面信息
+        /// </summary>
+        /// <param name="pageId"></param>
+        /// <returns></returns>
+        public Task<int> SavePageDetail(int pageId)
+        {
+            return Task.Run(() =>
+            {
+                string filepath = GetFullPathName(pageId.ToString());
+                if (File.Exists(filepath))
+                {
+                    return 1;
+                }
+                int time = 0;
+                pageDetailRequest requestObj = new pageDetailRequest(pageId, time);
+                pageDetailReturnData pd = null;
+                try
+                {
+                    pd = _bcController.GetPageDetail(requestObj);
+                    if (!object.Equals(pd, null) && !object.Equals(pd.data, null))
+                    {
+                        this.CachePageInfo(pd);
+                    }
+                }
+                catch (WebException ex)
+                {
+                    this.errorCode = -2;
+                    Logging.Error(ex.Message);
+                }
+                
+                return 1;
+            });
+        }
+
+        /// <summary>
+        /// 新建页面
+        /// </summary>
+        /// <param name="pageId"></param>
+        /// <param name="pageInfo"></param>
+        /// <returns></returns>
+        public Task<int> CreatePage(pageDetailReturnData pageInfo)
+        {
+            return Task.Run(() =>
+            {
+                this.CachePageInfo(pageInfo);
+                return 1;
+            });
+        }
+
+        /// <summary>
+        /// 获取页面配置本地路径
+        /// </summary>
+        /// <param name="pageid"></param>
+        /// <returns></returns>
         private string GetFullPathName(string pageid)
         {
             string filepath = ConfigureFilePath.PageDetailFolder + "\\" + pageid + ".xml";
+            return filepath;
+        }
+
+        private string GetFullPathNameForImage(string pageid, string ctrlid)
+        {
+            string filepath = @ConfigureFilePath.localImageFolder + "\\" + pageid + "_" + ctrlid + ".bmp";
             return filepath;
         }
 
@@ -98,6 +161,10 @@ namespace xinLongIDE.Controller.ConfigCMD
             }
         }
 
+        /// <summary>
+        /// 缓存页面信息
+        /// </summary>
+        /// <param name="obj"></param>
         private void CachePageInfo(pageDetailReturnData obj)
         {
             string filepath = this.GetFullPathName(obj.data.page_id.ToString());
@@ -105,7 +172,10 @@ namespace xinLongIDE.Controller.ConfigCMD
             {
                 File.Delete(filepath);
             }
-            GetSerizableObjectArray(obj.data.control_list);
+            if (!object.Equals(obj.data.control_list, null))
+            {
+                GetSerizableObjectArray(obj.data.control_list);
+            }
             xmlController.WriteToXmlFile<pageDetailReturnData>(filepath, obj);
         }
 
@@ -129,21 +199,56 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// </summary>
         /// <param name="url"></param>
         /// <returns></returns>
-        public Image GetImageByUrl(string url)
+        public Image GetImageByUrl(string url, string page_id, string ctrl_id)
         {
+            Image localImage = this.GetLocalImage(page_id, ctrl_id);
+            if (!object.Equals(localImage, null))
+            {
+                return localImage;
+            }
             if (string.IsNullOrEmpty(url))
             {
                 return Properties.Resources.defaultImg;
             }
-            var webClient = new WebClient();
-            byte[] imageBytes = webClient.DownloadData(url);
-            using (var ms = new System.IO.MemoryStream(imageBytes))
+            try
             {
-                Image image = Image.FromStream(ms);
-                webClient.Dispose();
-                webClient = null;
-                imageBytes = null;
-                return image;
+                var webClient = new WebClient();
+                byte[] imageBytes = webClient.DownloadData(url);
+                using (var ms = new System.IO.MemoryStream(imageBytes))
+                {
+                    Image image = Image.FromStream(ms);
+                    webClient.Dispose();
+                    webClient = null;
+                    imageBytes = null;
+                    if (!object.Equals(image, null))
+                    {
+                        image.Save(this.GetFullPathNameForImage(page_id, ctrl_id));
+                    }
+                    return image;
+                }
+            }
+            catch (Exception ex)
+            {
+                Logging.Error("保存本地图片出错：" + ex.Message);
+                return Properties.Resources.defaultImg;
+            }
+        }
+        /// <summary>
+        /// 获取本地图片
+        /// </summary>
+        /// <param name="pageid"></param>
+        /// <param name="ctrlid"></param>
+        /// <returns></returns>
+        public Image GetLocalImage(string pageid, string ctrlid)
+        {
+            string filePath = this.GetFullPathNameForImage(pageid, ctrlid);
+            if (File.Exists(filePath))
+            {
+                return Image.FromFile(filePath);
+            }
+            else
+            {
+                return null;
             }
         }
 
@@ -172,10 +277,10 @@ namespace xinLongIDE.Controller.ConfigCMD
             if (!xinLongyuControlType.pageType.Equals(obj.ctrl_type))
             {
                 int index = list.FindIndex(p => obj.ctrl_id.Equals(p.ctrl_id));
-                //if (list.IndexOf(ct.Tag as ControlDetailForPage) != -1)
-                //{
-                //    list.Remove(ct.Tag as ControlDetailForPage);
-                //}
+                if (index == -1)
+                {
+                    return;
+                }
                 obj.d1 = ct.Width;
                 obj.d2 = ct.Height;
 
@@ -223,22 +328,26 @@ namespace xinLongIDE.Controller.ConfigCMD
             obj.d2 = 50;
             obj.d3 = pt.X;
             obj.d4 = pt.Y;
-
             obj.d18 = isvisible ? "1" : "0";
 
             return obj;
         }
 
+        /// <summary>
+        /// 保存缓存
+        /// </summary>
+        /// <param name="tempInfo"></param>
+        /// <param name="list"></param>
+        /// <returns></returns>
         public int SaveCache(pageDetailReturnData tempInfo, List<ControlDetailForPage> list)
         {
-            //只处理control部分就可以了
-            //List<ControlDetailForPage> listAllControl = new List<ControlDetailForPage>();
-            //listAllControl.AddRange(list);
-            //listAllControl.AddRange(listInvisible);
-            object[][] objArray = ControlCaster.CastControlToObjectArray(list);
-            tempInfo.data.control_list = objArray;
+            if (!object.Equals(tempInfo, null))
+            {
+                object[][] objArray = ControlCaster.CastControlToObjectArray(list);
+                tempInfo.data.control_list = objArray;
 
-            CachePageInfo(tempInfo);
+                CachePageInfo(tempInfo);
+            }
             return 1;
         }
 
@@ -251,8 +360,11 @@ namespace xinLongIDE.Controller.ConfigCMD
         public int Upload(pageDetailReturnData tempInfo, List<ControlDetailForPage> list)
         {
             //只处理control部分就可以了
-            //pageSaveRequest request = new pageSaveRequest(tempInfo.data.page_name, tempInfo.data.page_id);
             pageSaveRequest request = new pageSaveRequest();
+            if (tempInfo.data.group_id == -1)
+            {
+                tempInfo.data.group_id = GetUnUploadedGroupId(tempInfo.data.page_id);
+            }
             pageObjForSavePage pageObj = new pageObjForSavePage(tempInfo.data.page_id, tempInfo.data.page_name, tempInfo.data.group_id);
             //pageObj.user_group = "admin";
             request.page = pageObj;
@@ -269,16 +381,56 @@ namespace xinLongIDE.Controller.ConfigCMD
         }
 
         /// <summary>
+        /// 获取上传后的组Id
+        /// </summary>
+        /// <param name="pageid"></param>
+        /// <returns></returns>
+        private int GetUnUploadedGroupId(int pageid)
+        {
+            pageGroupReturnData obj = xmlController.ReadFromXmlFile<pageGroupReturnData>(ConfigureFilePath.LocalGroupInfo);
+            if (object.Equals(obj, null))
+            {
+                return -1;
+            }
+            else
+            {
+                List<pageDetailForGroup> pagelist = new List<pageDetailForGroup>();
+                foreach (pageGroupDetail group in obj.data)
+                {
+                    if (!object.Equals(group.page_list, null))
+                    {
+                        pagelist.Clear();
+                        pagelist.AddRange(group.page_list);
+                        if (pagelist.FindIndex(p => pageid == p.page_id) != -1)
+                        {
+                            return group.group_id;
+                        }
+                    }
+                }
+
+            }
+            return -1;
+        }
+
+        /// <summary>
         /// 添加新控件
         /// </summary>
         /// <param name="list"></param>
         /// <param name="obj"></param>
-        public void AddNewControlToPageD0(List<ControlDetailForPage> list, ControlDetailForPage obj)
+        public Control AddNewControlToPageD0(List<ControlDetailForPage> list, List<Control> listFormControl, ControlDetailForPage obj, Point originalPoint)
         {
-            list.Add(obj);
-            ControlDetailForPage page = list.Where(p => xinLongyuControlType.pageType.Equals(p.ctrl_type)).ToList()[0];
-            //list.Remove(page);
-            Controller.ClassDecode clsDecode = new Controller.ClassDecode();
+            //list.Add(obj);
+            Control fatherControl = GetFatherControl(listFormControl, obj);
+            ControlDetailForPage page;
+            if (object.Equals(fatherControl, null))
+            {
+                page = list.Where(p => xinLongyuControlType.pageType.Equals(p.ctrl_type)).First();
+            }
+            else
+            {
+                page = fatherControl.Tag as ControlDetailForPage;
+            }
+            ClassDecode clsDecode = new ClassDecode();
             List<int> pageControlStrList = new List<int>();
             if (!string.IsNullOrEmpty(page.d0))
             {
@@ -286,9 +438,54 @@ namespace xinLongIDE.Controller.ConfigCMD
             }
             pageControlStrList.Add(obj.ctrl_id);
             page.d0 = ConvertarrayToString(pageControlStrList.ToArray());
-            int pageIndex = list.FindIndex(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
+            int pageIndex = list.FindIndex(p => p.ctrl_id.Equals(page.ctrl_id));
             list[pageIndex] = page;
-            //list.Add(page);
+            if (!object.Equals(fatherControl, null))
+            {
+                Point newPt = (fatherControl as Panel).PointToClient(new Point(originalPoint.X, originalPoint.Y));
+                obj.d3 = newPt.X;
+                obj.d4 = newPt.Y;
+                list.Add(obj);
+                fatherControl.Tag = page;
+                int fatherControlIndex = listFormControl.FindIndex(p => p.Name.Equals(fatherControl.Name));
+                listFormControl[fatherControlIndex] = fatherControl;
+                return fatherControl;
+            }
+            else
+            {
+                list.Add(obj);
+                return null;
+            }
+        }
+
+        private Control GetFatherControl(List<Control> list, ControlDetailForPage obj)
+        {
+            foreach(Control ct in list)
+            {
+                if (IsFatherControl(obj, ct))
+                {
+                    return ct;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// 判断是否有父控件
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="fatherObj"></param>
+        /// <returns></returns>
+        private bool IsFatherControl(ControlDetailForPage obj, Control fatherObj)
+        {
+            if (obj.d3 > fatherObj.Location.X && obj.d4 > fatherObj.Location.Y && (obj.d3 + obj.d1) < (fatherObj.Location.X + fatherObj.Width) && (obj.d4 + obj.d2) < (fatherObj.Location.Y + fatherObj.Height))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         /// <summary>
@@ -298,9 +495,13 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// <param name="obj"></param>
         public void DeleteControlFromPageD0(List<ControlDetailForPage> list, ControlDetailForPage obj)
         {
+            ClassDecode clsDecode = new ClassDecode();
             list.Remove(obj);
-            ControlDetailForPage page = list.Where(p => xinLongyuControlType.pageType.Equals(p.ctrl_type)).ToList()[0];
-            Controller.ClassDecode clsDecode = new Controller.ClassDecode();
+            ControlDetailForPage page = list.Where(p => !string.IsNullOrEmpty(p.d0) 
+            && (xinLongyuControlType.pageType.Equals(p.ctrl_type) || xinLongyuControlType.superViewType.Equals(p.ctrl_type))
+            && clsDecode.DecodeArray(p.d0).Contains(obj.ctrl_id)).First();
+            //ControlDetailForPage page = list.Where(p => xinLongyuControlType.pageType.Equals(p.ctrl_type)).ToList()[0];
+            
             List<int> pageControlStrList = new List<int>();
             if (!string.IsNullOrEmpty(page.d0))
             {
@@ -308,7 +509,7 @@ namespace xinLongIDE.Controller.ConfigCMD
             }
             pageControlStrList.Remove(obj.ctrl_id);
             page.d0 = ConvertarrayToString(pageControlStrList.ToArray());
-            int pageIndex = list.FindIndex(p => xinLongyuControlType.pageType.Equals(p.ctrl_type));
+            int pageIndex = list.FindIndex(p => p.ctrl_id.Equals(page.ctrl_id));
             list[pageIndex] = page;
         }
 
@@ -316,7 +517,7 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// <summary>
         /// 添加预设控件
         /// </summary>
-        public pageDetailReturnData AddPreControlsForNewPage(int pageId, string pageName, string groupId)
+        public pageDetailReturnData AddPreControlsForNewPage(int pageId, string pageName, int groupId)
         {
             List<ControlDetailForPage> list = new List<ControlDetailForPage>();
             //添加page

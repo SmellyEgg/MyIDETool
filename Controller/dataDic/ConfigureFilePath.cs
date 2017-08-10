@@ -18,5 +18,20 @@ namespace xinLongIDE.Controller.dataDic
         /// 页面细节配置文件路径文件夹
         /// </summary>
         public static string PageDetailFolder = Application.StartupPath + @"\PageInfo";
+
+        /// <summary>
+        /// 本地缓存图片
+        /// </summary>
+        public static string localImageFolder = Application.StartupPath + @"\PageInfo\Image";
+
+        /// <summary>
+        /// 已经打开的界面
+        /// </summary>
+        public static string openedPages = Application.StartupPath + @"\WindowsStatusConfig\pageConfig.xml";
+
+        /// <summary>
+        /// 本地组信息
+        /// </summary>
+        public static string LocalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\localGroupInfo.xml";
     }
 }

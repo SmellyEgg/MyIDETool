@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using xinLongIDE.Controller.CommonController;
+using xinLongIDE.Controller.dataDic;
 using xinLongIDE.Model.requestJson;
 using xinLongIDE.Model.returnJson;
 
@@ -10,27 +12,34 @@ namespace xinLongIDE.Controller.ConfigCMD
 {
     public class pageConfigCMD
     {
-        /// <summary>
-        /// 本地组信息
-        /// </summary>
-        private string LocalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\localGroupInfo.xml";
+
         /// <summary>
         /// 本地原始组信息
         /// </summary>
         private string LocalOriginalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\LocalOriginalGroupInfo.xml";
-
+        /// <summary>
+        /// 离线组信息
+        /// </summary>
+        private string OffLineGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\OffLineGroupInfo.xml";
+        /// <summary>
+        /// 错误码
+        /// </summary>
         public string errCode = string.Empty;
         /// <summary>
         /// 是否读取的是本地的配置文件
         /// </summary>
         public bool isReadLocal = false;
+        /// <summary>
+        /// 是否离线
+        /// </summary>
+        public bool isOffLine = false;
 
         /// <summary>
         /// 构造函数
         /// </summary>
         public pageConfigCMD()
         {
-            
+
         }
         /// <summary>
         /// 添加组
@@ -38,24 +47,63 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// <param name="groupName"></param>
         /// <param name="platForm"></param>
         /// <param name="groupInfo">当前的组信息</param>
-        public string AddGroup(string groupName, string platForm, pageGroupReturnData groupInfo)
+        public int AddGroup(string groupName, string platForm, pageGroupReturnData groupInfo)
         {
-            groupCreateRequest obj = new groupCreateRequest(groupName, platForm);
-            CommonReturn cmresult = _bsController.CreateGroup(obj);
-            string groupId = cmresult.data;
-            //添加到实体中
+            //groupCreateRequest obj = new groupCreateRequest(groupName, platForm);
+            //CommonReturn cmresult = _bsController.CreateGroup(obj);
+            //string groupId = cmresult.data;
+            ////添加到实体中
+            if (object.Equals(groupInfo, null))
+            {
+                groupInfo = new pageGroupReturnData();
+            }
+
             pageGroupDetail newGroup = new pageGroupDetail();
-            newGroup.group_id = groupId;
+            newGroup.group_id = -1;
             newGroup.group_name = groupName;
 
             List<pageGroupDetail> lstpagegroupdetail = new List<pageGroupDetail>();
-            lstpagegroupdetail.AddRange(groupInfo.data);
+            if (!object.Equals(groupInfo.data, null))
+            {
+                lstpagegroupdetail.AddRange(groupInfo.data);
+            }
             lstpagegroupdetail.Add(newGroup);
 
             groupInfo.data = lstpagegroupdetail.ToArray();
-            return groupId;
+            this.SaveCache(null, groupInfo);
+            //return groupId;
+            return -1;
         }
 
+        /// <summary>
+        /// 上传组信息
+        /// </summary>
+        /// <param name="groupInfo"></param>
+        /// <returns></returns>
+        public int UploadGroupInfo(pageGroupReturnData groupInfo)
+        {
+            List<pageGroupDetail> listgroupInfo = new List<pageGroupDetail>();
+            int groupId = -1;
+            if (!object.Equals(groupInfo.data, null))
+            {
+                listgroupInfo.AddRange(groupInfo.data);
+                foreach (pageGroupDetail obj in groupInfo.data)
+                {
+                    if (obj.group_id == -1)
+                    {
+                        groupCreateRequest objRequest = new groupCreateRequest(obj.group_name, string.Empty);
+                        CommonReturn cmresult = _bsController.CreateGroup(objRequest);
+                        groupId = xinLongyuConverter.StringToInt(cmresult.data);
+                        int index = listgroupInfo.FindIndex(p => obj.group_name.Equals(p.group_name));
+                        listgroupInfo[index].group_id = groupId;
+                    }
+                }
+                groupInfo.data = listgroupInfo.ToArray();
+                //上传组ID的时候, 顺便保存一下缓存
+                this.SaveCache(null, groupInfo);
+            }
+            return 1;
+        }
         /// <summary>
         /// 新增页面
         /// </summary>
@@ -64,23 +112,35 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// <param name="groupId"></param>
         /// <param name="platForm"></param>
         /// <param name="groupInfo"></param>
-        public void AddPage(int pageid, string pageName, string groupId, string platForm, pageGroupReturnData groupInfo)
+        public void AddPage(int pageid, string pageName, int groupId, string groupName, string platForm, pageGroupReturnData groupInfo)
         {
             //这里用了一大堆linq的逻辑，后续需要考虑优化一下算法
             pageDetailForGroup newpage = new pageDetailForGroup();
             newpage.page_id = pageid;
             newpage.page_name = pageName;
             List<pageGroupDetail> lstpagegroupdetail = new List<pageGroupDetail>();
-            lstpagegroupdetail.AddRange(groupInfo.data);
+            if (!object.Equals(groupInfo, null))
+            {
+                if (!object.Equals(groupInfo.data, null))
+                {
+                    lstpagegroupdetail.AddRange(groupInfo.data);
+                }
+                pageGroupDetail currentGroup;
+                currentGroup = lstpagegroupdetail.Where(p => groupId == p.group_id && groupName.Equals(p.group_name)).ToList()[0];
+                List<pageDetailForGroup> lstpagedetail = new List<pageDetailForGroup>();
+                if (!object.Equals(currentGroup.page_list, null))
+                {
+                    lstpagedetail.AddRange(currentGroup.page_list);
+                }
+                lstpagedetail.Add(newpage);
+                currentGroup.page_list = lstpagedetail.ToArray();
 
-            pageGroupDetail currentGroup = lstpagegroupdetail.First(p => groupId.Equals(p.group_id));
-            List<pageDetailForGroup> lstpagedetail = new List<pageDetailForGroup>();
-            lstpagedetail.AddRange(currentGroup.page_list);
-            lstpagedetail.Add(newpage);
-            currentGroup.page_list = lstpagedetail.ToArray();
+                int groupIndex = lstpagegroupdetail.FindIndex(p => groupId == p.group_id && groupName.Equals(p.group_name));
+                groupInfo.data[groupIndex] = currentGroup;
+                this.SaveCache(null, groupInfo);
+            }
 
-            int groupIndex = lstpagegroupdetail.FindIndex(p => groupId.Equals(p.group_id));
-            groupInfo.data[groupIndex] = currentGroup;
+
         }
 
         /// <summary>
@@ -88,30 +148,57 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public int GetNewPageId(pageGroupReturnData obj)
+        public int GetNewPageId(pageGroupReturnData obj, pageGroupReturnData original)
         {
             int maxId = 0;
-            foreach (pageGroupDetail pd in obj.data)
+            if (object.Equals(obj, null))
             {
-                List<pageDetailForGroup> lstSecond = new List<pageDetailForGroup>();
-                lstSecond.AddRange(pd.page_list);
-                if (lstSecond.Count > 1)
+                if (object.Equals(original, null))
                 {
-                    int id = lstSecond.Max(x => x.page_id);
-                    if (id > maxId)
-                    {
-                        maxId = id;
-                    }
-                    lstSecond.Clear();
-                    lstSecond = null;
+                    return maxId;
                 }
+                foreach (pageGroupDetail pd in original.data)
+                {
+                    List<pageDetailForGroup> lstSecond = new List<pageDetailForGroup>();
+                    if (!object.Equals(pd.page_list, null))
+                    {
+                        lstSecond.AddRange(pd.page_list);
+                    }
+                    if (lstSecond.Count > 0)
+                    {
+                        int id = lstSecond.Max(x => x.page_id);
+                        if (id > maxId)
+                        {
+                            maxId = id;
+                        }
+                        lstSecond.Clear();
+                        lstSecond = null;
+                    }
+                }
+                return maxId + 1;
             }
-            return maxId;
-        }
-
-        public void SavePage()
-        {
-            
+            else
+            {
+                foreach (pageGroupDetail pd in obj.data)
+                {
+                    List<pageDetailForGroup> lstSecond = new List<pageDetailForGroup>();
+                    if (!object.Equals(pd.page_list, null))
+                    {
+                        lstSecond.AddRange(pd.page_list);
+                    }
+                    if (lstSecond.Count > 0)
+                    {
+                        int id = lstSecond.Max(x => x.page_id);
+                        if (id > maxId)
+                        {
+                            maxId = id;
+                        }
+                        lstSecond.Clear();
+                        lstSecond = null;
+                    }
+                }
+                return maxId + 1;
+            }
         }
 
         /// <summary>
@@ -123,9 +210,9 @@ namespace xinLongIDE.Controller.ConfigCMD
             {
                 File.Delete(LocalOriginalGroupInfo);
             }
-            if (File.Exists(LocalGroupInfo))
+            if (File.Exists(ConfigureFilePath.LocalGroupInfo))
             {
-                File.Delete(LocalGroupInfo);
+                File.Delete(ConfigureFilePath.LocalGroupInfo);
             }
         }
 
@@ -133,48 +220,6 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// 通讯业务层
         /// </summary>
         private BaseController _bsController = new BaseController();
-       
-        private void DemoTest(string name, string id)
-        {
-            //ControlDetailForRequest objtext = new ControlDetailForRequest();
-            //objtext.ctrl_id = "50";
-            //objtext.ctrl_level = "10";
-            //objtext.ctrl_type = "text";
-            //objtext.d0 = "测试页";
-            //objtext.d1 = "320";
-            //objtext.d2 = "44";
-            //objtext.d3 = "0";
-            //objtext.d4 = "0";
-            //objtext.d6 = "18";
-            //objtext.d7 = "#22798A";
-            //objtext.d8 = "#ffffff";
-            //objtext.d18 = "1";
-            //objtext.d19 = "1";
-            //objtext.d26 = "0";
-            //objtext.d36 = "15";
-
-            //ControlDetailForRequest objimg = new ControlDetailForRequest();
-            //objimg.ctrl_id = "51";
-            //objimg.ctrl_level = "2";
-            //objimg.ctrl_type = "img";
-            //objimg.d0 = "http://img.sootuu.com/vector/2007-07-01/068/3/200.gif";
-            //objimg.d1 = "44";
-            //objimg.d2 = "44";
-            //objimg.d3 = "0";
-            //objimg.d4 = "0";
-            //objimg.d5 = "1";
-            //objimg.d6 = "11";
-            //objimg.d7 = "#000000";
-            //objimg.d11 = "#ffffff";
-            //objimg.d18 = "1";
-            //objimg.d19 = "1";
-            //objimg.d26 = "0";
-            //objimg.d36 = "15";
-
-            //request.ctrls = new ControlDetailForRequest[] { objPage, objNavigationBar, objtext, objimg };
-
-            //CommonReturn objReturn = _bsController.SavePageInfo(request);
-        }
 
         /// <summary>
         /// 缓存
@@ -183,7 +228,7 @@ namespace xinLongIDE.Controller.ConfigCMD
         {
             return Task.Run(() =>
             {
-                if (!object.Equals(originalGroupInfo, null))
+                if (!object.Equals(originalGroupInfo, null) && !object.Equals(originalGroupInfo.data, null))
                 {
                     if (File.Exists(LocalOriginalGroupInfo))
                     {
@@ -191,13 +236,13 @@ namespace xinLongIDE.Controller.ConfigCMD
                     }
                     xmlController.WriteToXmlFile<pageGroupReturnData>(LocalOriginalGroupInfo, originalGroupInfo);
                 }
-                if (!object.Equals(tempGroupInfo, null))
+                if (!object.Equals(tempGroupInfo, null) && !object.Equals(tempGroupInfo.data, null))
                 {
-                    if (File.Exists(LocalGroupInfo))
+                    if (File.Exists(ConfigureFilePath.LocalGroupInfo))
                     {
-                        File.Delete(LocalGroupInfo);
+                        File.Delete(ConfigureFilePath.LocalGroupInfo);
                     }
-                    xmlController.WriteToXmlFile<pageGroupReturnData>(LocalGroupInfo, tempGroupInfo);
+                    xmlController.WriteToXmlFile<pageGroupReturnData>(ConfigureFilePath.LocalGroupInfo, tempGroupInfo);
                 }
                 return 1;
             });
@@ -212,10 +257,10 @@ namespace xinLongIDE.Controller.ConfigCMD
         {
             return Task.Run(() =>
             {
-                if (File.Exists(LocalGroupInfo))
+                if (File.Exists(ConfigureFilePath.LocalGroupInfo))
                 {
                     isReadLocal = true;
-                    return GetPageGroupInfoLocal(platForm, LocalGroupInfo);
+                    return GetPageGroupInfoLocal(platForm, ConfigureFilePath.LocalGroupInfo);
                 }
                 else
                 {
@@ -224,19 +269,51 @@ namespace xinLongIDE.Controller.ConfigCMD
                     try
                     {
                         pageGroupReturnData obj = bc.GetPageGroupInfo(platForm);
-                        xmlController.WriteToXmlFile<pageGroupReturnData>(LocalGroupInfo, obj);
+                        xmlController.WriteToXmlFile<pageGroupReturnData>(ConfigureFilePath.LocalGroupInfo, obj);
                         //
                         xmlController.WriteToXmlFile<pageGroupReturnData>(LocalOriginalGroupInfo, obj);
+                        //合并离线信息
+                        CombineOfflineGroupInfo(obj);
                         return obj;
                     }
                     catch (Exception ex)
                     {
-                        errCode = "获取页面信息出错:" + ex.Message;
-                        return null;
+                        errCode = "获取页面信息出错:" + "连接不上服务！";
+                        Logging.Error("获取页面信息出错:" + ex.Message);
+                        isOffLine = true;
+                        pageGroupReturnData obj = this.GetPageGroupInfoLocal(string.Empty, OffLineGroupInfo);
+                        return obj;
                     }
                 }
-
             });
+        }
+
+        /// <summary>
+        /// 将离线里面的信息合并到其他版本信息中
+        /// </summary>
+        /// <param name="obj"></param>
+        private void CombineOfflineGroupInfo(pageGroupReturnData obj)
+        {
+            isOffLine = false;
+            if (File.Exists(OffLineGroupInfo))
+            {
+                if (object.Equals(obj, null))
+                {
+                    obj = new pageGroupReturnData();
+                }
+                pageGroupReturnData offLineObj = xmlController.ReadFromXmlFile<pageGroupReturnData>(OffLineGroupInfo);
+                List<pageGroupDetail> listGroup = new List<pageGroupDetail>();
+                if (!object.Equals(obj.data, null))
+                {
+                    listGroup.AddRange(obj.data);
+                }
+                if (!object.Equals(offLineObj.data, null))
+                {
+                    listGroup.AddRange(offLineObj.data);
+                }
+                obj.data = listGroup.ToArray();
+                File.Delete(OffLineGroupInfo);
+            }
         }
 
         /// <summary>
@@ -250,22 +327,24 @@ namespace xinLongIDE.Controller.ConfigCMD
             {
                 if (File.Exists(LocalOriginalGroupInfo))
                 {
-                    isReadLocal = true;
+                    //isReadLocal = true;
                     return GetPageGroupInfoLocal(platForm, LocalOriginalGroupInfo);
                 }
                 else
                 {
-                    isReadLocal = false;
+                    //isReadLocal = false;
                     BaseController bc = new BaseController();
                     try
                     {
                         pageGroupReturnData obj = bc.GetPageGroupInfo(platForm);
                         xmlController.WriteToXmlFile<pageGroupReturnData>(LocalOriginalGroupInfo, obj);
+                        isOffLine = false;
                         return obj;
                     }
                     catch (Exception ex)
                     {
                         errCode = "获取页面信息出错:" + ex.Message;
+                        isOffLine = true;
                         return null;
                     }
                 }
@@ -282,6 +361,17 @@ namespace xinLongIDE.Controller.ConfigCMD
             {
                 File.Delete(LocalOriginalGroupInfo);
             }
+        }
+
+        public pageGroupReturnData GetPageGroupInfoTemp()
+        {
+            pageGroupReturnData groupInfo = GetPageGroupInfoLocal(string.Empty, ConfigureFilePath.LocalGroupInfo);
+            if (File.Exists(OffLineGroupInfo))
+            {
+                CombineOfflineGroupInfo(groupInfo);
+                File.Delete(OffLineGroupInfo);
+            }
+            return groupInfo;
         }
 
         /// <summary>
@@ -301,6 +391,68 @@ namespace xinLongIDE.Controller.ConfigCMD
                 errCode = "获取页面信息出错:" + ex.Message;
                 return null;
             }
+        }
+
+        /// <summary>
+        /// 下载页面时做的操作
+        /// </summary>
+        /// <param name="pageId"></param>
+        /// <param name="groupId"></param>
+        /// <param name="currentOriginalInfo"></param>
+        /// <param name="currentGroupInfo"></param>
+        public int DownLoadPage(int pageId, int groupId, pageGroupReturnData currentOriginalInfo, pageGroupReturnData currentGroupInfo)
+        {
+            List<pageGroupDetail> listGroupOriginal = new List<pageGroupDetail>();
+            listGroupOriginal.AddRange(currentOriginalInfo.data);
+            List<pageGroupDetail> listGrouptemp = new List<pageGroupDetail>();
+            if (!object.Equals(currentGroupInfo.data, null))
+            {
+                listGrouptemp.AddRange(currentGroupInfo.data);
+            }
+            //判断是不是下载的是空分组,暂时不考虑一次性下载整个分组下所有页面信息的情况
+            if (groupId == -1)
+            {
+                pageGroupDetail groupTemp = listGroupOriginal.Where(p => pageId.Equals(p.group_id)).ToList()[0];
+                listGrouptemp.Add(groupTemp);
+                currentGroupInfo.data = listGrouptemp.ToArray();
+                return 1;
+            }
+            pageGroupDetail group = listGroupOriginal.Where(p => groupId.Equals(p.group_id)).ToList()[0];
+            List<pageDetailForGroup> pagelist = new List<pageDetailForGroup>();
+            pagelist.AddRange(group.page_list);
+            //如果不包含这个组就先添加这个组,添加的这个组已经包含了要添加的页面信息
+            if (listGrouptemp.FindIndex(p => groupId.Equals(p.group_id)) == -1)
+            {
+                pageDetailForGroup page = pagelist.First(p => pageId.Equals(p.page_id));
+                pageGroupDetail groupTemp = new pageGroupDetail();
+                groupTemp.group_id = group.group_id;
+                groupTemp.group_name = group.group_name;
+                List<pageDetailForGroup> pagelistTemp = new List<pageDetailForGroup>();
+                pagelistTemp.Add(page);
+                groupTemp.page_list = pagelistTemp.ToArray();
+                listGrouptemp.Add(groupTemp);
+            }
+            else
+            {
+
+                pageGroupDetail groupTemp = listGrouptemp.First(p => groupId.Equals(p.group_id));
+                pageDetailForGroup page = pagelist.First(p => pageId.Equals(p.page_id));
+                List<pageDetailForGroup> pagelistTemp = new List<pageDetailForGroup>();
+                if (!object.Equals(groupTemp.page_list, null))
+                {
+                    pagelistTemp.AddRange(groupTemp.page_list);
+                }
+                if (pagelistTemp.FindIndex(p => pageId.Equals(p.page_id)) != -1)
+                {
+                    return -1;
+                }
+                pagelistTemp.Add(page);
+                groupTemp.page_list = pagelistTemp.ToArray();
+                int groupIndex = listGrouptemp.FindIndex(p => groupId.Equals(p.group_id));
+                listGrouptemp[groupIndex] = groupTemp;
+            }
+            currentGroupInfo.data = listGrouptemp.ToArray();
+            return 1;
         }
 
     }

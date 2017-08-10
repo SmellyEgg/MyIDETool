@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace xinLongIDE.Model.Page
+﻿namespace xinLongIDE.Model.Page
 {
     public class nodeObjectTransfer
     {
         private int pageId = -1;
 
-        private string groupId = string.Empty;
+        private int groupId = -1;
 
         private string pageName = string.Empty;
 
@@ -33,7 +27,7 @@ namespace xinLongIDE.Model.Page
         /// <summary>
         /// 组ID
         /// </summary>
-        public string GroupId
+        public int GroupId
         {
             get
             {

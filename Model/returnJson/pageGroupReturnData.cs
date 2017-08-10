@@ -14,7 +14,7 @@ namespace xinLongIDE.Model.returnJson
 
     public class pageGroupDetail
     {
-        public string group_id = string.Empty;
+        public int group_id = -1;
 
         public string group_name = string.Empty;
 

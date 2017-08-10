@@ -13,8 +13,8 @@ namespace xinLongIDE
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Controller.Logging.OpenLogFile();
-            Application.Run(new View.frmMainIDE());
+            Controller.CommonController.Logging.OpenLogFile();
+            Application.Run(new View.MainForm.frmMainIDE());
         }
     }
 }

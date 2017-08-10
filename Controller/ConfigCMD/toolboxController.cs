@@ -10,9 +10,10 @@ namespace xinLongIDE.Controller.ConfigCMD
 {
     public class toolboxController
     {
-        private static List<string> listOfControlTypevalue = new List<string>() { xinLongyuControlType.buttonType, xinLongyuControlType.textType, xinLongyuControlType.imgType, xinLongyuControlType.imgType, xinLongyuControlType.inputType, xinLongyuControlType.webviewType, xinLongyuControlType.timerType };
+        private static List<string> listOfControlTypevalue = new List<string>() { xinLongyuControlType.buttonType, xinLongyuControlType.textType, xinLongyuControlType.imgType, xinLongyuControlType.imgType, xinLongyuControlType.inputType, xinLongyuControlType.webviewType, xinLongyuControlType.timerType,
+            xinLongyuControlType.superViewType };
 
-        private static List<Boolean> listOfControlTypeVisibility = new List<Boolean>() { true, true, true, true, true, true, false };
+        private static List<Boolean> listOfControlTypeVisibility = new List<Boolean>() { true, true, true, true, true, true, false, true };
 
         private static ImageList imageListOfControlList = new ImageList();
 
@@ -26,6 +27,7 @@ namespace xinLongIDE.Controller.ConfigCMD
             imageListOfControlList.Images.Add(Properties.Resources.xinglongyuTextbox);
             imageListOfControlList.Images.Add(Properties.Resources.xinlongyuWebView);
             imageListOfControlList.Images.Add(Properties.Resources.xinlongyuTimer);
+            imageListOfControlList.Images.Add(Properties.Resources.xinlongyuSuperView);
         }
 
         public ImageList GetImageIconList()
@@ -55,7 +57,8 @@ namespace xinLongIDE.Controller.ConfigCMD
             进度条,
             文本输入框,
             webview,
-            计时器
+            计时器, 
+            父控件
         }
 
         

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using xinLongIDE.Model.returnJson;
 
@@ -10,13 +12,19 @@ namespace xinLongIDE.Controller.ConfigCMD
         delegate void SetControlTextCallback(Control ct, string text);
         delegate void GetControlTextCallback(Control ct, ref string text);
         delegate void GetControlCallback(Panel pnl, string controlName, ref Control ct);
+        delegate void ShowTabPageCallback(TabControl pnl);
 
-
-        public Task<int> SetObjectToView(ControlDetailForPage obj, Panel pnl)
+        /// <summary>
+        /// 显示控件的属性到界面上
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public Task<int> SetObjectToView(ControlDetailForPage obj, List<Control> list)
         {
             return Task.Run(() =>
             {
-                if (object.Equals(pnl, null) || object.Equals(obj, null))
+                if (object.Equals(list, null) || object.Equals(obj, null))
                 {
                     return 0;
                 }
@@ -24,8 +32,12 @@ namespace xinLongIDE.Controller.ConfigCMD
                 {
                     string value = prop.GetValue(obj).ToString();
                     string controlName = "txt_" + prop.Name;
-                    Control ct = pnl.Controls.Find(controlName, true)[0];
-                    SetControlText(ct, value);
+                    int index = list.FindIndex(p => controlName.Equals(p.Name));
+                    if (index != -1)
+                    {
+                        Control ct = list.First(p => controlName.Equals(p.Name));
+                        SetControlText(ct, value);
+                    }
                 }
                 return 1;
             });
@@ -52,6 +64,34 @@ namespace xinLongIDE.Controller.ConfigCMD
             else
             {
                 pnl.Controls.Add(ct);
+            }
+        }
+
+        /// <summary>
+        /// 防止占用线程卡死
+        /// </summary>
+        /// <param name="pnl"></param>
+        public void ShowTabPage(TabControl pnl)
+        {
+            if (pnl.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True
+            {
+                while (!pnl.IsHandleCreated)
+                {
+                    //解决窗体关闭时出现“访问已释放句柄“的异常
+                    if (pnl.Disposing || pnl.IsDisposed)
+                        return;
+                }
+                ShowTabPageCallback d = new ShowTabPageCallback(ShowTabPage);
+                pnl.Invoke(d, new object[] { pnl });
+            }
+            else
+            {
+                foreach (TabPage page in pnl.TabPages)
+                {
+                    pnl.SelectedTab = page;
+                    page.Show();
+                }
+                pnl.SelectedIndex = 0;
             }
         }
 

@@ -31,7 +31,7 @@ namespace xinLongIDE.Model.requestJson
 
         public string page_status = string.Empty;
 
-        public string group_id = string.Empty;
+        public int group_id = -1;
 
         public string temple_id = string.Empty;
 
@@ -75,7 +75,7 @@ namespace xinLongIDE.Model.requestJson
 
         public string user_group = string.Empty;
 
-        public pageObjForSavePage(int id, string name, string groupid)
+        public pageObjForSavePage(int id, string name, int groupid)
         {
             this.page_id = id;
             this.page_name = name;

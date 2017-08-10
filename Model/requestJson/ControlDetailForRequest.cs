@@ -9,7 +9,7 @@ namespace xinLongIDE.Model.requestJson
 
     public class ControlDetailForRequest
     {
-        public int ctrl_id = -1;
+        public int ctrl_id;
 
         public int ctrl_level = -1;
 

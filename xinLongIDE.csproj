@@ -56,32 +56,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\BaseController.cs" />
-    <Compile Include="Controller\CacheController.cs" />
-    <Compile Include="Controller\ClassDecode.cs" />
+    <Compile Include="Controller\CommonController\BaseController.cs" />
+    <Compile Include="Controller\CommonController\ClassDecode.cs" />
+    <Compile Include="Controller\CommonController\I18N.cs" />
     <Compile Include="Controller\ConfigCMD\controlPropertyController.cs" />
+    <Compile Include="Controller\ConfigCMD\Function.cs" />
     <Compile Include="Controller\ConfigCMD\pageConfigCMD.cs" />
     <Compile Include="Controller\ConfigCMD\paintBoardController.cs" />
     <Compile Include="Controller\ConfigCMD\toolboxController.cs" />
-    <Compile Include="Controller\ConnectionController.cs" />
-    <Compile Include="Controller\ControlCaster.cs" />
-    <Compile Include="Controller\controlConfig\ControlMoverOrResizer.cs" />
+    <Compile Include="Controller\ConfigCMD\windowsStatusController.cs" />
+    <Compile Include="Controller\CommonController\ConnectionController.cs" />
+    <Compile Include="Controller\CommonController\ControlCaster.cs" />
     <Compile Include="Controller\dataDic\ConfigureFilePath.cs" />
-    <Compile Include="Controller\dataDic\ControlPropertyEnum.cs" />
-    <Compile Include="Controller\dataDic\dataAccessDictionary.cs" />
-    <Compile Include="Controller\dataDic\windowsStatusEnum.cs" />
+    <Compile Include="Controller\dataDic\jsonApiType.cs" />
+    <Compile Include="Controller\xinlongyuEnum\windowsStatusEnum.cs" />
     <Compile Include="Controller\dataDic\xinLongyuControlType.cs" />
-    <Compile Include="Controller\JsonManager.cs" />
-    <Compile Include="Controller\Logging.cs" />
-    <Compile Include="Controller\Settings\I18N.cs" />
-    <Compile Include="Controller\xinLongyuConverter.cs" />
+    <Compile Include="Controller\CommonController\JsonManager.cs" />
+    <Compile Include="Controller\CommonController\Logging.cs" />
+    <Compile Include="Controller\CommonController\xinLongyuConverter.cs" />
     <Compile Include="Model\Control\toolboxItem.cs" />
     <Compile Include="Model\Page\nodeObjectTransfer.cs" />
     <Compile Include="Model\requestJson\CommonLoginRequest.cs" />
     <Compile Include="Model\requestJson\ControlDetailForRequest.cs" />
     <Compile Include="Model\returnJson\returnStatus.cs" />
     <Compile Include="Model\Setting\FormStatusSettings.cs" />
-    <Compile Include="Controller\Settings\windowsStatusController.cs" />
     <Compile Include="Controller\xml\configManager.cs" />
     <Compile Include="Controller\xml\xmlController.cs" />
     <Compile Include="Model\requestJson\BaseRequestJson.cs" />
@@ -106,10 +104,15 @@
     <Compile Include="Model\viewModel\ControlType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\Control\frmGetInputName.cs">
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExtendForm\frmGetInputName.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Control\frmGetInputName.Designer.cs">
+    <Compile Include="View\ExtendForm\frmGetInputName.Designer.cs">
       <DependentUpon>frmGetInputName.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Control\xinLongyuButton.cs">
@@ -142,62 +145,84 @@
     <Compile Include="View\Control\xinLongyuWebView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="View\frmControlProperty.cs">
+    <Compile Include="View\ExtendForm\frmEventInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\frmControlProperty.Designer.cs">
+    <Compile Include="View\ExtendForm\frmEventInput.Designer.cs">
+      <DependentUpon>frmEventInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\ExtendForm\frmWaiting.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ExtendForm\frmWaiting.Designer.cs">
+      <DependentUpon>frmWaiting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainForm\frmControlProperty.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MainForm\frmControlProperty.Designer.cs">
       <DependentUpon>frmControlProperty.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\frmMainIDE.cs">
+    <Compile Include="View\MainForm\frmMainIDE.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\frmMainIDE.Designer.cs">
+    <Compile Include="View\MainForm\frmMainIDE.Designer.cs">
       <DependentUpon>frmMainIDE.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\frmPageManager.cs">
+    <Compile Include="View\MainForm\frmPageManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\frmPageManager.Designer.cs">
+    <Compile Include="View\MainForm\frmPageManager.Designer.cs">
       <DependentUpon>frmPageManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\frmPaintBoard.cs">
+    <Compile Include="View\MainForm\frmPaintBoard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\frmPaintBoard.Designer.cs">
+    <Compile Include="View\MainForm\frmPaintBoard.Designer.cs">
       <DependentUpon>frmPaintBoard.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\frmToolBox.cs">
+    <Compile Include="View\MainForm\frmTabForPaintBoard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\frmToolBox.Designer.cs">
+    <Compile Include="View\MainForm\frmTabForPaintBoard.Designer.cs">
+      <DependentUpon>frmTabForPaintBoard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\MainForm\frmToolBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MainForm\frmToolBox.Designer.cs">
       <DependentUpon>frmToolBox.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <EmbeddedResource Include="View\Control\frmGetInputName.resx">
+    <EmbeddedResource Include="View\ExtendForm\frmGetInputName.resx">
       <DependentUpon>frmGetInputName.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\frmControlProperty.resx">
+    <EmbeddedResource Include="View\ExtendForm\frmEventInput.resx">
+      <DependentUpon>frmEventInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\ExtendForm\frmWaiting.resx">
+      <DependentUpon>frmWaiting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MainForm\frmControlProperty.resx">
       <DependentUpon>frmControlProperty.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\frmMainIDE.resx">
+    <EmbeddedResource Include="View\MainForm\frmMainIDE.resx">
       <DependentUpon>frmMainIDE.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\frmPageManager.resx">
+    <EmbeddedResource Include="View\MainForm\frmPageManager.resx">
       <DependentUpon>frmPageManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\frmPaintBoard.resx">
+    <EmbeddedResource Include="View\MainForm\frmPaintBoard.resx">
       <DependentUpon>frmPaintBoard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\frmToolBox.resx">
+    <EmbeddedResource Include="View\MainForm\frmTabForPaintBoard.resx">
+      <DependentUpon>frmTabForPaintBoard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\MainForm\frmToolBox.resx">
       <DependentUpon>frmToolBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -266,8 +291,14 @@
     <None Include="Resources\xinlongyuButton.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Controller\dataDic\zh_CN.txt" />
+    <Content Include="Controller\dataDic\Translator\zh_Translate.txt" />
+    <Content Include="Controller\dataDic\Translator\zh_ControlEvent.txt" />
+    <Content Include="Controller\dataDic\Translator\zh_ControlProperty.txt" />
+    <Content Include="Controller\dataDic\Translator\zh_CN.txt" />
+    <None Include="Resources\xinlongyuSuperView.ico" />
+    <None Include="Resources\xinlongNumSelector.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

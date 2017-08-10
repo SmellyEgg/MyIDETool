@@ -151,6 +151,16 @@ namespace xinLongIDE.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap xinlongNumSelector {
+            get {
+                object obj = ResourceManager.GetObject("xinlongNumSelector", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Icon xinlongyuButton {
@@ -176,6 +186,16 @@ namespace xinLongIDE.Properties {
         internal static System.Drawing.Icon xinlongyuPrgBar {
             get {
                 object obj = ResourceManager.GetObject("xinlongyuPrgBar", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Icon xinlongyuSuperView {
+            get {
+                object obj = ResourceManager.GetObject("xinlongyuSuperView", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }
@@ -215,10 +235,43 @@ namespace xinLongIDE.Properties {
         ///
         ///xinLongIDE=鑫隆宇
         ///
-        ///# Menu items
+        ///# Property items
         ///page_id=页面ID
+        ///ctrl_id=控件ID
+        ///ctrl_level=画布层级
+        ///ctrl_type=控件类型
+        ///ctrl_name=控件名称
+        ///version=版本号
+        ///d0=通用属性
+        ///d1=宽度
+        ///d2=高度
+        ///d3=X坐标
+        ///d4=Y坐标
+        ///d6=字体大小
+        ///d7=字体颜色
+        ///d8=背景颜色
+        ///d9=内容对齐
+        ///d10=选中时背景颜色
+        ///d11=选中时字体颜色
+        ///d12=是否自适应高度
+        ///d13=提示语
+        ///d14=边框颜色
+        ///d15=边框宽度
+        ///d16=键盘类型
+        ///d17=子控件ID列表
         ///
-        ///# Config Form
+        ///
+        ///# Config Event
+        ///p0=单击
+        ///p1=双击
+        ///p2=长按
+        ///p3=主值改变
+        ///p4=数据获取
+        ///p5=获取焦点
+        ///p6=失去焦点
+        ///p7=页面加载
+        ///p8=页面消失
+        ///p9=触发后触发
         ///
         ///
         /// 的本地化字符串。
@@ -226,6 +279,227 @@ namespace xinLongIDE.Properties {
         internal static string zh_CN {
             get {
                 return ResourceManager.GetString("zh_CN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 #触发事件
+        ///p0
+        ///p1
+        ///p2
+        ///p3
+        ///p4
+        ///p5
+        ///p6
+        ///p7
+        ///p8
+        ///p9
+        ///p10
+        ///p11
+        ///p12
+        ///p13
+        ///p14
+        ///p15
+        ///p16
+        ///p17
+        ///p18
+        ///p19
+        ///p20
+        ///p21
+        ///p22
+        ///p23
+        ///p24
+        ///p25
+        ///p26
+        ///p27
+        ///p28
+        ///p29
+        ///p30
+        ///p31
+        ///p32
+        ///p33
+        ///p34
+        ///p35
+        ///p36
+        ///p37
+        ///p38
+        ///p39
+        ///p40
+        ///p41
+        ///p42
+        ///p43
+        ///p44
+        ///p45
+        ///p46
+        ///p47
+        ///p48
+        ///p49
+        ///p50 的本地化字符串。
+        /// </summary>
+        internal static string zh_ControlEvent {
+            get {
+                return ResourceManager.GetString("zh_ControlEvent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 
+        ///# Property items
+        ///page_id
+        ///ctrl_id
+        ///ctrl_level
+        ///ctrl_type
+        ///d0
+        ///d1
+        ///d2
+        ///d3
+        ///d4
+        ///d5
+        ///d6
+        ///d7
+        ///d8
+        ///d9
+        ///d10
+        ///d11
+        ///d12
+        ///d13
+        ///d14
+        ///d15
+        ///d16
+        ///d17
+        ///d18
+        ///d19
+        ///d20
+        ///d21
+        ///d22
+        ///d23
+        ///d24
+        ///d25
+        ///d26
+        ///d27
+        ///d28
+        ///d29
+        ///d30
+        ///d31
+        ///d32
+        ///d33
+        ///d34
+        ///d35
+        ///d36
+        ///d37
+        ///d38
+        ///d39
+        ///d40
+        ///d41
+        ///d42
+        ///d43
+        ///d44
+        ///d45
+        ///d46
+        ///d47
+        ///d48
+        ///d49
+        ///d50
+        ///d51
+        ///d52
+        ///d53
+        ///d54
+        ///d55
+        ///d56
+        ///d57
+        ///d58
+        ///d59
+        ///d60
+        ///d61
+        ///d62
+        ///d63
+        ///d64
+        ///d65
+        ///d66
+        ///d67
+        ///d68
+        ///d69
+        ///d70
+        ///d71
+        ///d72
+        ///d73
+        ///d74
+        ///d75
+        ///d76
+        ///d77
+        ///d78
+        ///d79
+        ///d80
+        ///d81
+        ///d82
+        ///d83
+        ///d84
+        ///d85
+        ///d86
+        ///d87
+        ///d88
+        ///d89
+        ///d90
+        ///d91
+        ///d [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string zh_ControlProperty {
+            get {
+                return ResourceManager.GetString("zh_ControlProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 # translation for Simplified Chinese
+        ///内容=d0
+        ///宽度=d1
+        ///高度=d2
+        ///X坐标=d3
+        ///Y坐标=d4
+        ///行高=d5
+        ///字体大小=d6
+        ///字体颜色=d7
+        ///背景颜色=d8
+        ///内容对齐=d9
+        ///选中时背景颜色=d10
+        ///选中时字体颜色=d11
+        ///是否自适应高度=d12
+        ///提示语=d13
+        ///边框颜色=d14
+        ///边框宽度=d15
+        ///键盘类型=d16
+        ///子控件列表=d17
+        ///显隐性=d18
+        ///是否接收触摸事件=d19
+        ///未选中时图片列表=d20
+        ///选中时图片列表=d21
+        ///key值对数组=d22
+        ///确定按钮文本=d23
+        ///取消按钮文本=d24
+        ///文本垂直对齐方式=d25
+        ///是否自适应宽度=d26
+        ///是否下拉刷新=d27
+        ///是否上拉加载=d28
+        ///行分割线的颜色=d29
+        ///是否显示行分割线=d30
+        ///可以选择的最小时间=d31
+        ///可以选择的最小时间，默认最小日期+100年=d32
+        ///轮播间隔时间=d33
+        ///每行数量=d34
+        ///当前选中的下标=d35
+        ///圆角大小，默认0=d36
+        ///
+        ///
+        ///#a事件
+        ///刷新=a0
+        ///启动=a1
+        ///添加缓存=a2
+        ///从缓存中取出=a3
+        ///删除缓存= [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string zh_Translate {
+            get {
+                return ResourceManager.GetString("zh_Translate", resourceCulture);
             }
         }
     }
