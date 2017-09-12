@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace xinLongIDE.Model.requestJson
+﻿namespace xinLongIDE.Model.requestJson
 {
     public class pageDetailRequest
     {
@@ -12,10 +6,13 @@ namespace xinLongIDE.Model.requestJson
 
         public int time = 0;
 
-        public pageDetailRequest(int id, int time)
+        public string page_platform = string.Empty;
+
+        public pageDetailRequest(int id, int time, string platform)
         {
             this.page_id = id;
             this.time = time;
+            this.page_platform = platform;
         }
 
 

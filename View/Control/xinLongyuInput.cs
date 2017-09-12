@@ -7,6 +7,7 @@ namespace xinLongIDE.View.Control
     public class xinLongyuInput : TextBox
     {
         private const int grab = 5;
+
         public xinLongyuInput()
         {
             this.ResizeRedraw = true;

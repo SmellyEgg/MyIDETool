@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace xinLongIDE.Controller.dataDic
+﻿namespace xinLongIDE.Controller.dataDic
 {
     /// <summary>
     /// 请求头
@@ -16,7 +10,7 @@ namespace xinLongIDE.Controller.dataDic
         /// </summary>
         public static string login = "login";
         /// <summary>
-        /// 上传
+        /// 图片上传
         /// </summary>
         public static string upload = "upload";
         /// <summary>

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace xinLongIDE.Controller.dataDic
+﻿namespace xinLongIDE.Controller.dataDic
 {
     public class xinLongyuControlType
     {
@@ -70,7 +64,7 @@ namespace xinLongIDE.Controller.dataDic
         /// <summary>
         /// 频道栏控件
         /// </summary>
-        public static string channerBarType = "channerBar";
+        public static string channerBarType = "channelBar";
         /// <summary>
         /// 多行列表控件
         /// </summary>
@@ -91,6 +85,16 @@ namespace xinLongIDE.Controller.dataDic
         /// 弹出选择控件
         /// </summary>
         public static string selectBoxPopupType = "selectBoxPopup";
+        /// <summary>
+        /// 评分控件
+        /// </summary>
+        public static string RatingBarType = "RatingBar";
+        /// <summary>
+        /// 动态布局列表
+        /// </summary>
+        public static string dynamicListsType = "dynamicLists";
+
+
 
         //隐性控件
         /// <summary>
@@ -145,5 +149,43 @@ namespace xinLongIDE.Controller.dataDic
         /// 视频播放控件，弹出播放窗口模式
         /// </summary>
         public static string videoType = "video";
+        /// <summary>
+        /// 数据获取
+        /// </summary>
+        public static string getDataType = "getData";
+        /// <summary>
+        /// 短信发送
+        /// </summary>
+        public static string SMSVerificationVerifyType = "SMSVerificationVerify";
+        /// <summary>
+        /// 短信验证
+        /// </summary>
+        public static string SMSVerificationSendType = "SMSVerificationSend";
+        /// <summary>
+        /// 逻辑判断
+        /// </summary>
+        public static string LogicJudgmentType = "LogicJudgment";
+        /// <summary>
+        /// 分享控件
+        /// </summary>
+        public static string ShareType = "Share";
+
+        //PC独有的控件
+        /// <summary>
+        /// 表格的列明
+        /// </summary>
+        public static string GridColumnName = "GridColumnName";
+        /// <summary>
+        /// PC表格控件
+        /// </summary>
+        public static string PCGrid = "PcGrid";
+        /// <summary>
+        /// 开关控件
+        /// </summary>
+        public static string switcherType = "switcher";
+        /// <summary>
+        /// 分割线
+        /// </summary>
+        public static string seperateLineType = "seperateLine";
     }
 }

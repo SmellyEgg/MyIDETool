@@ -1,4 +1,5 @@
 ﻿# translation for Simplified Chinese
+#此文件不需要进行在线更新，而是需要手动进行配置，因为这部分是属于自定义的名字
 内容=d0
 宽度=d1
 高度=d2

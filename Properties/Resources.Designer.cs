@@ -191,6 +191,16 @@ namespace xinLongIDE.Properties {
         }
         
         /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap xinlongyuRatingBar {
+            get {
+                object obj = ResourceManager.GetObject("xinlongyuRatingBar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查找类似于 (图标) 的 System.Drawing.Icon 类型的本地化资源。
         /// </summary>
         internal static System.Drawing.Icon xinlongyuSuperView {
@@ -231,10 +241,7 @@ namespace xinLongIDE.Properties {
         }
         
         /// <summary>
-        ///   查找类似 # translation for Simplified Chinese
-        ///
-        ///xinLongIDE=鑫隆宇
-        ///
+        ///   查找类似 
         ///# Property items
         ///page_id=页面ID
         ///ctrl_id=控件ID
@@ -261,7 +268,7 @@ namespace xinLongIDE.Properties {
         ///d17=子控件ID列表
         ///
         ///
-        ///# Config Event
+        ///# Event items
         ///p0=单击
         ///p1=双击
         ///p2=长按
@@ -272,6 +279,13 @@ namespace xinLongIDE.Properties {
         ///p7=页面加载
         ///p8=页面消失
         ///p9=触发后触发
+        ///
+        ///#额外
+        ///PageName=页面名称
+        ///PageWidth=页面宽度
+        ///PageHeight=页面高度
+        ///PageId=页面ID
+        ///UserGroup=用户组
         ///
         ///
         /// 的本地化字符串。
@@ -450,7 +464,27 @@ namespace xinLongIDE.Properties {
         }
         
         /// <summary>
+        ///   查找类似 
+        ///# Property items
+        ///PageName
+        ///PageWidth
+        ///PageHeight
+        ///PageId
+        ///UserGroup
+        ///
+        ///
+        ///
+        /// 的本地化字符串。
+        /// </summary>
+        internal static string zh_PageProperty {
+            get {
+                return ResourceManager.GetString("zh_PageProperty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 # translation for Simplified Chinese
+        ///#此文件不需要进行在线更新，而是需要手动进行配置，因为这部分是属于自定义的名字
         ///内容=d0
         ///宽度=d1
         ///高度=d2
@@ -490,12 +524,7 @@ namespace xinLongIDE.Properties {
         ///圆角大小，默认0=d36
         ///
         ///
-        ///#a事件
-        ///刷新=a0
-        ///启动=a1
-        ///添加缓存=a2
-        ///从缓存中取出=a3
-        ///删除缓存= [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///#a事件 [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string zh_Translate {
             get {

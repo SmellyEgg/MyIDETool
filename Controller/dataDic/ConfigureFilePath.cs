@@ -28,10 +28,38 @@ namespace xinLongIDE.Controller.dataDic
         /// 已经打开的界面
         /// </summary>
         public static string openedPages = Application.StartupPath + @"\WindowsStatusConfig\pageConfig.xml";
+        /// <summary>
+        /// 已经打开画板的状态
+        /// </summary>
+        public static string openedPagesState = Application.StartupPath + @"\WindowsStatusConfig\pageConfigState.xml";
+
+        /// <summary>
+        /// 已经打开的PC界面
+        /// </summary>
+        public static string openedPCPages = Application.StartupPath + @"\WindowsStatusConfig\PCpageConfig.xml";
+        /// <summary>
+        /// 已经打开pC画板的状态
+        /// </summary>
+        public static string openedPCPagesState = Application.StartupPath + @"\WindowsStatusConfig\PCpageConfigState.xml";
 
         /// <summary>
         /// 本地组信息
         /// </summary>
         public static string LocalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\localGroupInfo.xml";
+
+        /// <summary>
+        /// 原始组信息
+        /// </summary>
+        public static string LocalOriginalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\LocalOriginalGroupInfo.xml";
+
+        /// <summary>
+        /// PC本地组信息
+        /// </summary>
+        public static string LocalPCGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\localPCGroupInfo.xml";
+
+        /// <summary>
+        /// PC原始组信息
+        /// </summary>
+        public static string LocalPCOriginalGroupInfo = System.Windows.Forms.Application.StartupPath + "\\GroupConfig\\LocalPCOriginalGroupInfo.xml";
     }
 }

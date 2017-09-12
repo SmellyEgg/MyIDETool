@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace xinLongIDE.Model.returnJson
 {
@@ -15,7 +11,7 @@ namespace xinLongIDE.Model.returnJson
 
     public class dataForPageDetail
     {
-        public string id = string.Empty;
+        //public int id;
 
         public int page_id = -1;
 
@@ -58,6 +54,8 @@ namespace xinLongIDE.Model.returnJson
         public string hidenavigation = string.Empty;
 
         public object[][] control_list;
+
+        public string user_group = string.Empty;
     }
 
     public class eventListObj
@@ -65,6 +63,7 @@ namespace xinLongIDE.Model.returnJson
 
     }
 
+    [Serializable]
     public class ControlDetailForPage
     {
         //public string id = string.Empty;
@@ -580,5 +579,23 @@ namespace xinLongIDE.Model.returnJson
         public string p49 = string.Empty;
 
         public string p50 = string.Empty;
+
+        /// <summary>
+        /// 重写一下类的比较方法
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            ControlDetailForPage ct = obj as ControlDetailForPage;
+            if (ct.ctrl_id == this.ctrl_id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }

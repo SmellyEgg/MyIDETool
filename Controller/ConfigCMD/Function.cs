@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Drawing;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Forms;
 using xinLongIDE.Controller.CommonController;
 
 namespace xinLongIDE.Controller.ConfigCMD
@@ -88,6 +91,26 @@ namespace xinLongIDE.Controller.ConfigCMD
                 text = text.Replace(match.Value, "." + I18N.GetTranslatorString(match.Value.Substring(1, match.Value.Length - 1)));
             }
             return text;
+        }
+
+
+        public static Point FormRelativeLocation(Control control, Form form = null)
+        {
+            if (form == null)
+            {
+                form = control.FindForm();
+                if (form == null)
+                {
+                    throw new Exception("Form not found.");
+                }
+            }
+
+            Point cScreen = control.PointToScreen(control.Location);
+            Point fScreen = form.Location;
+            Point cFormRel = new Point(cScreen.X - fScreen.X, cScreen.Y - fScreen.Y);
+
+            return cFormRel;
+
         }
 
     }

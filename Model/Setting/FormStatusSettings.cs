@@ -8,6 +8,9 @@ namespace xinLongIDE.Model.Setting
 
         private Point point;
 
+        private string platForm = string.Empty;
+
+
         public Size SizeConfig
         {
             get 
@@ -29,6 +32,19 @@ namespace xinLongIDE.Model.Setting
             set
             {
                 this.point = value;
+            }
+        }
+
+        public string PlatForm
+        {
+            get
+            {
+                return platForm;
+            }
+
+            set
+            {
+                platForm = value;
             }
         }
     }

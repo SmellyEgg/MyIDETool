@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using xinLongIDE.Model.Page;
 using xinLongIDE.Model.returnJson;
 
 namespace xinLongIDE.Controller.ConfigCMD
@@ -10,6 +11,7 @@ namespace xinLongIDE.Controller.ConfigCMD
     {
         delegate void SetPanelControlCallback(Control ct, Panel pnl);
         delegate void SetControlTextCallback(Control ct, string text);
+        delegate void SetControlColorCallback(Control ct, string color);
         delegate void GetControlTextCallback(Control ct, ref string text);
         delegate void GetControlCallback(Panel pnl, string controlName, ref Control ct);
         delegate void ShowTabPageCallback(TabControl pnl);
@@ -20,15 +22,46 @@ namespace xinLongIDE.Controller.ConfigCMD
         /// <param name="obj"></param>
         /// <param name="list"></param>
         /// <returns></returns>
-        public Task<int> SetObjectToView(ControlDetailForPage obj, List<Control> list)
+        public int SetObjectToView(ControlDetailForPage obj, List<Control> list)
         {
-            return Task.Run(() =>
-            {
+            //return Task.Run(() =>
+            //{
                 if (object.Equals(list, null) || object.Equals(obj, null))
                 {
                     return 0;
                 }
+                List<Control> listValued = list.Where(p => !object.Equals(p.Tag, null)).ToList();
                 foreach (var prop in obj.GetType().GetFields())
+                {
+                    string value = prop.GetValue(obj).ToString();
+                    string controlName = "txt_" + prop.Name;
+                    int index = list.FindIndex(p => controlName.Equals(p.Name));
+                    if (index != -1)
+                    {
+                        Control ct = list.First(p => controlName.Equals(p.Name));
+                        SetControlText(ct, value);
+                        if (listValued.FindIndex(p => controlName.Equals(p.Tag.ToString())) != -1)
+                        {
+                            Control btn = listValued.First(p => controlName.Equals(p.Tag.ToString()));
+                            SetControlColor(btn, value);
+                        }
+
+                    }
+                }
+                return 1;
+            //});
+        }
+
+        public int SetObjectToPageView(basePageProperty obj, List<Control> list)
+        {
+            //return Task.Run(() =>
+            //{
+                if (object.Equals(list, null) || object.Equals(obj, null))
+                {
+                    return 0;
+                }
+                List<Control> listValued = list.Where(p => !object.Equals(p.Tag, null)).ToList();
+                foreach (var prop in obj.GetType().GetProperties())
                 {
                     string value = prop.GetValue(obj).ToString();
                     string controlName = "txt_" + prop.Name;
@@ -40,7 +73,7 @@ namespace xinLongIDE.Controller.ConfigCMD
                     }
                 }
                 return 1;
-            });
+            //});
         }
 
         /// <summary>
@@ -118,7 +151,35 @@ namespace xinLongIDE.Controller.ConfigCMD
                 ct.Text = text;
             }
         }
+        /// <summary>
+        /// 设置控件颜色
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <param name="text"></param>
+        private void SetControlColor(Control ct, string text)
+        {
+            if (ct.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True
+            {
+                while (!ct.IsHandleCreated)
+                {
+                    //解决窗体关闭时出现“访问已释放句柄“的异常
+                    if (ct.Disposing || ct.IsDisposed)
+                        return;
+                }
+                SetControlColorCallback d = new SetControlColorCallback(SetControlColor);
+                ct.Invoke(d, new object[] { ct, text });
+            }
+            else
+            {
+                ct.BackColor = System.Drawing.ColorTranslator.FromHtml(text);
+            }
+        }
 
+        /// <summary>
+        /// 获取控件文本信息
+        /// </summary>
+        /// <param name="ct"></param>
+        /// <param name="text"></param>
         public void GetControlText(Control ct, ref string text)
         {
             if (ct.InvokeRequired)//如果调用控件的线程和创建创建控件的线程不是同一个则为True

@@ -1,4 +1,5 @@
-﻿using xinLongIDE.Controller.dataDic;
+﻿using System.Collections.Generic;
+using xinLongIDE.Controller.dataDic;
 using xinLongIDE.Model.requestJson;
 using xinLongIDE.Model.returnJson;
 
@@ -22,6 +23,7 @@ namespace xinLongIDE.Controller.CommonController
             _ccController = new ConnectionController();
             _clsDecode = new ClassDecode();
         }
+
         /// <summary>
         /// 上传照片
         /// </summary>
@@ -30,11 +32,13 @@ namespace xinLongIDE.Controller.CommonController
         public photoUploadReturnData PhotoUpload(photoUploadRequest obj)
         {
             string apitype = jsonApiType.upload;
-            BaseRequestJson bj = new BaseRequestJson();
-            bj.api_type = apitype;
-            bj.data = obj;
-
-            string result = _ccController.getReturnStr(bj);
+            var values = new[]
+{
+                new KeyValuePair<string, string>("api_type", apitype),
+                new KeyValuePair<string, string>("sql", obj.sql),
+                 //other values
+            };
+            string  result = _ccController.PostPhoto(obj.file, values);
             BaseReturnJson brj = _clsDecode.DecodeBaseReturnJson(result);
             photoUploadReturnData pur = _clsDecode.DecodephotoUploadReturnData(brj.data.ToString());
             return pur;
@@ -88,11 +92,13 @@ namespace xinLongIDE.Controller.CommonController
         /// <returns></returns>
         public CommonReturn CreateGroup(groupCreateRequest gcr)
         {
-            BaseRequestJson brj = new BaseRequestJson();
-            brj.data = gcr;
-            brj.api_type = jsonApiType.groupCreate;
+            string apitype = jsonApiType.groupCreate;
 
-            return getCommonReturn(brj);
+            BaseRequestJson bj = this.GetBaseRequest();
+            bj.data = gcr;
+            bj.api_type = apitype;
+
+            return getCommonReturn(bj);
         }
 
         /// <summary>

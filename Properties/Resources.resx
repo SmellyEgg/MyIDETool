@@ -181,4 +181,10 @@
   <data name="zh_Translate" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Controller\dataDic\Translator\zh_Translate.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
+  <data name="zh_PageProperty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Controller\dataDic\Translator\zh_PageProperty.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="xinlongyuRatingBar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\xinlongyuRatingBar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

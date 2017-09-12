@@ -1,7 +1,4 @@
-﻿# translation for Simplified Chinese
-
-xinLongIDE=鑫隆宇
-
+﻿
 # Property items
 page_id=页面ID
 ctrl_id=控件ID
@@ -28,7 +25,7 @@ d16=键盘类型
 d17=子控件ID列表
 
 
-# Config Event
+# Event items
 p0=单击
 p1=双击
 p2=长按
@@ -39,5 +36,12 @@ p6=失去焦点
 p7=页面加载
 p8=页面消失
 p9=触发后触发
+
+#额外
+PageName=页面名称
+PageWidth=页面宽度
+PageHeight=页面高度
+PageId=页面ID
+UserGroup=用户组
 
 

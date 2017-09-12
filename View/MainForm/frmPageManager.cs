@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using xinLongIDE.Controller.CommonController;
 using xinLongIDE.Controller.ConfigCMD;
@@ -85,52 +87,18 @@ namespace xinLongIDE.View.MainForm
                 Logging.Error("PlatForm is empty!");
                 return;
             }
+            _currentOriginalInfo = new pageGroupReturnData();
             _currentOriginalInfo = await _pageconfigCmd.GetOriginalPageInfo(platForm);
             if (!object.Equals(_currentOriginalInfo, null))
             {
                 SetValueToTreeView(this.tvwOriginal, _currentOriginalInfo);
             }
-            else
-            {
-                MessageBox.Show("无法连接服务，正在使用离线版本！");
-            }
-            _currentGroupInfo = _pageconfigCmd.GetPageGroupInfoTemp();
+            _currentGroupInfo = new pageGroupReturnData();
+            _currentGroupInfo = _pageconfigCmd.GetPageGroupInfoTemp(platform);
             if (!object.Equals(_currentGroupInfo, null))
             {
                 SetValueToTreeView(this.tvwPageGroups, _currentGroupInfo);
             }
-            //改成要么全部在线读取要么全部从本地读取
-            //_currentGroupInfo = await _pageconfigCmd.GetPageGroupInfo(platForm);
-            //if (_pageconfigCmd.isOffLine)
-            //{
-            //    MessageBox.Show("当前使用的为离线版本!");
-            //    if (Object.Equals(_currentGroupInfo, null))
-            //    {
-            //        _currentGroupInfo = new pageGroupReturnData();
-            //        return;
-            //    }
-            //}
-            //if (!_pageconfigCmd.isReadLocal)
-            //{
-            //    _currentOriginalInfo = _currentGroupInfo;
-            //}
-            //else
-            //{
-            //    _currentOriginalInfo = await _pageconfigCmd.GetOriginalPageInfo(platForm);
-            //}
-            //this.prgPageLoad.Value = 30;
-            //if (!Object.Equals(_currentGroupInfo, null))
-            //{
-            //    SetValueToTreeView(this.tvwOriginal, _currentOriginalInfo);
-            //    //SetValueToTreeView(this.tvwPageGroups, _currentGroupInfo);
-            //    //将文件中的缓存添加到页面中来
-            //    //_pageconfigCmd.SetCacheToTreeView(this.tvwPageGroups);
-            //}
-            //else
-            //{
-            //    MessageBox.Show(_pageconfigCmd.errCode);
-            //    return;
-            //}
         }
 
         /// <summary>
@@ -163,11 +131,16 @@ namespace xinLongIDE.View.MainForm
         /// 获取输入的页面或组名称
         /// </summary>
         /// <returns></returns>
-        private string GetCreateName()
+        private string GetCreateName(bool isChild)
         {
             Control.frmGetInputName frm = new Control.frmGetInputName();
+            frm.SetUserGroup(isChild);
             if (frm.ShowDialog() == DialogResult.OK)
             {
+                if (isChild)
+                {
+                    return frm.createName + "," + frm.userGroup;
+                }
                 return frm.createName;
             }
             return string.Empty;
@@ -190,7 +163,8 @@ namespace xinLongIDE.View.MainForm
         /// <param name="isParent"></param>
         private void AddNode(bool isParent)
         {
-            string nodeText = this.GetCreateName();
+            string resultStr = this.GetCreateName(!isParent);
+            string nodeText = resultStr.Split(',')[0];
             if (string.IsNullOrEmpty(nodeText)) return;
             if (isNodeExists(_currentSelectedNode, nodeText, isParent))
             {
@@ -198,15 +172,29 @@ namespace xinLongIDE.View.MainForm
                 return;
             }
             TreeNode Node = new TreeNode(nodeText);
+
+            
             if (isParent)
             {
+                if (object.Equals(_currentGroupInfo, null))
+                {
+                    _currentGroupInfo = new pageGroupReturnData();
+                }
                 int groupid = _pageconfigCmd.AddGroup(nodeText, platForm, _currentGroupInfo);
                 Node.Tag = groupid;
                 this.tvwPageGroups.Nodes.Add(Node);
             }
             else
             {
-                int pageid = _pageconfigCmd.GetNewPageId(_currentGroupInfo, _currentOriginalInfo);
+                if (object.Equals(_currentGroupInfo, null))
+                {
+                    _currentGroupInfo = new pageGroupReturnData();
+                }
+                if (object.Equals(_currentOriginalInfo, null))
+                {
+                    _currentOriginalInfo = new pageGroupReturnData();
+                }
+                int pageid = _pageconfigCmd.GetNewPageId(_currentGroupInfo, _currentOriginalInfo, this.platForm);
                 int groupId = (int)_currentSelectedNode.Tag;
                 string groupName = _currentSelectedNode.Text;
                 _pageconfigCmd.AddPage(pageid, nodeText, groupId, groupName, PlatForm, _currentGroupInfo);
@@ -217,9 +205,12 @@ namespace xinLongIDE.View.MainForm
                 obj.PageId = pageid;
                 obj.GroupId = groupId;
                 obj.PageName = nodeText;
+                obj.Plat_form = this.platForm;
+                obj.UserGroup = resultStr.Split(',')[1];
                 pageCreated.Invoke(obj);
 
             }
+            this.SaveCache();
         }
 
         /// <summary>
@@ -258,12 +249,14 @@ namespace xinLongIDE.View.MainForm
         /// </summary>
         public async void SaveCache()
         {
-            int result = await _pageconfigCmd.SaveCache(_currentOriginalInfo, _currentGroupInfo);
+            //int result = await _pageconfigCmd.SaveCache(_currentOriginalInfo, _currentGroupInfo, this.platForm);
+            //这里不使用异步，由于异步会导致组信息取到的还是上次的缓存
+            _pageconfigCmd.SaveCache(_currentOriginalInfo, _currentGroupInfo, this.platForm);
         }
 
         public void Upload()
         {
-            _pageconfigCmd.UploadGroupInfo(_currentGroupInfo);
+            _pageconfigCmd.UploadGroupInfo(_currentGroupInfo, this.platForm);
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -296,11 +289,21 @@ namespace xinLongIDE.View.MainForm
             AddNode(isParent);
         }
 
+        /// <summary>
+        /// 刷新事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tsrRefresh_Click(object sender, EventArgs e)
         {
             this.RefreshOriginalTree();
         }
 
+        /// <summary>
+        /// 树节点双击事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void tvwPageGroups_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             _currentSelectedNode = e.Node;
@@ -311,6 +314,7 @@ namespace xinLongIDE.View.MainForm
                 obj.PageId = (int)_currentSelectedNode.Tag;
                 obj.GroupId = (int)_currentSelectedNode.Parent.Tag;
                 obj.PageName = _currentSelectedNode.Text;
+                obj.Plat_form = this.platForm;
                 nodeSelected.Invoke(obj);
             }
         }
@@ -330,16 +334,25 @@ namespace xinLongIDE.View.MainForm
             TreeNode clickedNode = e.Node;
             if (object.Equals(clickedNode, null))
             {
+                MessageBox.Show("暂时只支持下载页面！");
                 return;
             }
             int pageId = (int)clickedNode.Tag;
-            int groupId = !object.Equals(clickedNode.Parent, null) ? (int)(clickedNode.Parent.Tag) : -1;
+            int groupId = !object.Equals(clickedNode.Parent, null) ? (int)(clickedNode.Parent.Tag) : (int)clickedNode.Tag;
             //_currentOriginalInfo.data
             if (object.Equals(_currentGroupInfo, null))
             {
                 _currentGroupInfo = new pageGroupReturnData();
             }
-            int result = _pageconfigCmd.DownLoadPage(pageId, groupId, _currentOriginalInfo, _currentGroupInfo);
+            int result = 0;
+            if (!object.Equals(clickedNode.Parent, null))
+            {
+                result = _pageconfigCmd.DownLoadPage(pageId, groupId, _currentOriginalInfo, _currentGroupInfo);
+            }
+            else
+            {
+                result = _pageconfigCmd.DownLoadGroup(groupId, _currentOriginalInfo, _currentGroupInfo);
+            }
             if (result == 1)
             {
                 this.SetValueToTreeView(this.tvwPageGroups, _currentGroupInfo);
@@ -353,9 +366,63 @@ namespace xinLongIDE.View.MainForm
                     obj.PageName = clickedNode.Text;
                     pageDownloaded.Invoke(obj);
                 }
+                else
+                {
+                    List<pageGroupDetail> listGroup = new List<pageGroupDetail>();
+                    listGroup.AddRange(_currentOriginalInfo.data);
+                    pageGroupDetail group = listGroup.First(p => groupId == p.group_id);
+                    foreach(pageDetailForGroup page in group.page_list)
+                    {
+                        nodeObjectTransfer obj = new nodeObjectTransfer();
+                        obj.PageId = page.page_id;
+                        obj.GroupId = groupId;
+                        obj.PageName = page.page_name;
+                        pageDownloaded.Invoke(obj);
+                    }
+                }
             }
         }
 
+        /// <summary>
+        /// 更改页面属性
+        /// </summary>
+        /// <param name="oldObj"></param>
+        /// <param name="newObj"></param>
+        public void ChangePageProperty(object oldObj, object newObj)
+        {
+            _pageconfigCmd.ChangePageProperty(oldObj, newObj, _currentGroupInfo);
+            this.SaveCache();
+            this.SetPages(this.platForm);
+        }
 
+        /// <summary>
+        /// 清理树目录
+        /// </summary>
+        public void Clear()
+        {
+            this.tvwOriginal.Nodes.Clear();
+            this.tvwPageGroups.Nodes.Clear();
+        }
+
+        private void tsbtnDeleteNode_Click(object sender, EventArgs e)
+        {
+            if (object.Equals(_currentSelectedNode, null))
+            {
+                MessageBox.Show("请先选择一个节点！");
+                return;
+            }
+
+            //删除父节点的情况
+            if (object.Equals(_currentSelectedNode.Parent, null))
+            {
+                //_currentGroupInfo.data
+            }
+            //删除子节点的情况
+            else
+            {
+
+            }
+
+        }
     }
 }

@@ -45,13 +45,18 @@ namespace xinLongIDE.Controller
             try
             {
                 var serializer = new XmlSerializer(typeof(T));
-                writer = new StreamWriter(filePath, File.Exists(filePath) ? true : false);
-                serializer.Serialize(writer, objectToWrite);
+                using (writer = new StreamWriter(filePath, File.Exists(filePath) ? true : false))
+                {
+                    serializer.Serialize(writer, objectToWrite);
+                }
             }
             finally
             {
                 if (writer != null)
+                {
+                    writer.Dispose();
                     writer.Close();
+                }
             }
         }
 
@@ -61,13 +66,18 @@ namespace xinLongIDE.Controller
             try
             {
                 var serializer = new XmlSerializer(typeof(T));
-                reader = new StreamReader(filePath);
-                return (T)serializer.Deserialize(reader);
+                using (reader = new StreamReader(filePath))
+                {
+                    return (T)serializer.Deserialize(reader);
+                }
             }
             finally
             {
                 if (reader != null)
+                {
+                    reader.Dispose();
                     reader.Close();
+                }
             }
         }
 

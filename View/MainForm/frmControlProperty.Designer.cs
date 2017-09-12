@@ -28,24 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabControl = new System.Windows.Forms.TabControl();
             this.tbgProperty = new System.Windows.Forms.TabPage();
             this.tbgEvent = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
+            this.tbgPageProperty = new System.Windows.Forms.TabPage();
+            this.tabControl.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // tabControl
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.tabControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tbgProperty);
-            this.tabControl1.Controls.Add(this.tbgEvent);
-            this.tabControl1.Location = new System.Drawing.Point(1, 2);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(287, 718);
-            this.tabControl1.TabIndex = 0;
+            this.tabControl.Controls.Add(this.tbgProperty);
+            this.tabControl.Controls.Add(this.tbgEvent);
+            this.tabControl.Controls.Add(this.tbgPageProperty);
+            this.tabControl.Location = new System.Drawing.Point(1, 2);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(287, 718);
+            this.tabControl.TabIndex = 0;
             // 
             // tbgProperty
             // 
@@ -64,10 +66,20 @@
             this.tbgEvent.Location = new System.Drawing.Point(4, 22);
             this.tbgEvent.Name = "tbgEvent";
             this.tbgEvent.Padding = new System.Windows.Forms.Padding(3);
-            this.tbgEvent.Size = new System.Drawing.Size(279, 695);
+            this.tbgEvent.Size = new System.Drawing.Size(279, 692);
             this.tbgEvent.TabIndex = 1;
             this.tbgEvent.Text = "事件";
             this.tbgEvent.UseVisualStyleBackColor = true;
+            // 
+            // tbgPageProperty
+            // 
+            this.tbgPageProperty.Location = new System.Drawing.Point(4, 22);
+            this.tbgPageProperty.Name = "tbgPageProperty";
+            this.tbgPageProperty.Padding = new System.Windows.Forms.Padding(3);
+            this.tbgPageProperty.Size = new System.Drawing.Size(279, 692);
+            this.tbgPageProperty.TabIndex = 2;
+            this.tbgPageProperty.Text = "页面属性";
+            this.tbgPageProperty.UseVisualStyleBackColor = true;
             // 
             // frmControlProperty
             // 
@@ -75,18 +87,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(287, 722);
             this.ControlBox = false;
-            this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.tabControl);
             this.Name = "frmControlProperty";
             this.Text = "属性";
-            this.tabControl1.ResumeLayout(false);
+            this.tabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tbgProperty;
         private System.Windows.Forms.TabPage tbgEvent;
+        private System.Windows.Forms.TabPage tbgPageProperty;
     }
 }

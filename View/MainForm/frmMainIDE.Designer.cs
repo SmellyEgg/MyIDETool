@@ -28,12 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMainIDE));
             this.pnlStatusBar = new System.Windows.Forms.Panel();
             this.prgStatus = new System.Windows.Forms.ProgressBar();
             this.tsrMainForm = new System.Windows.Forms.ToolStrip();
             this.tsbtnSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.tsbtnUpload = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tscmbType = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.pnlStatusBar.SuspendLayout();
             this.tsrMainForm.SuspendLayout();
             this.SuspendLayout();
@@ -61,10 +67,15 @@
             this.tsrMainForm.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tsbtnSave,
             this.toolStripSeparator1,
-            this.tsbtnUpload});
+            this.tsbtnUpload,
+            this.toolStripSeparator2,
+            this.toolStripButton1,
+            this.toolStripSeparator4,
+            this.tscmbType,
+            this.toolStripSeparator3});
             this.tsrMainForm.Location = new System.Drawing.Point(0, 0);
             this.tsrMainForm.Name = "tsrMainForm";
-            this.tsrMainForm.Size = new System.Drawing.Size(1481, 25);
+            this.tsrMainForm.Size = new System.Drawing.Size(1481, 30);
             this.tsrMainForm.TabIndex = 2;
             this.tsrMainForm.Text = "toolStrip1";
             // 
@@ -73,23 +84,59 @@
             this.tsbtnSave.Image = global::xinLongIDE.Properties.Resources.toolStripSave;
             this.tsbtnSave.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnSave.Name = "tsbtnSave";
-            this.tsbtnSave.Size = new System.Drawing.Size(52, 22);
-            this.tsbtnSave.Text = "保存";
+            this.tsbtnSave.Size = new System.Drawing.Size(76, 27);
+            this.tsbtnSave.Text = "全部保存";
             this.tsbtnSave.Click += new System.EventHandler(this.tsbtnSave_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 30);
             // 
             // tsbtnUpload
             // 
             this.tsbtnUpload.Image = global::xinLongIDE.Properties.Resources.toolStripUpload;
             this.tsbtnUpload.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsbtnUpload.Name = "tsbtnUpload";
-            this.tsbtnUpload.Size = new System.Drawing.Size(52, 22);
-            this.tsbtnUpload.Text = "上传";
+            this.tsbtnUpload.Size = new System.Drawing.Size(76, 27);
+            this.tsbtnUpload.Text = "全部上传";
             this.tsbtnUpload.Click += new System.EventHandler(this.tsbtnUpload_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 30);
+            // 
+            // tscmbType
+            // 
+            this.tscmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.tscmbType.Font = new System.Drawing.Font("Microsoft YaHei UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tscmbType.Items.AddRange(new object[] {
+            "app",
+            "pc"});
+            this.tscmbType.Name = "tscmbType";
+            this.tscmbType.Size = new System.Drawing.Size(75, 30);
+            this.tscmbType.SelectedIndexChanged += new System.EventHandler(this.tscmbType_SelectedIndexChanged);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 30);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(60, 27);
+            this.toolStripButton1.Text = "清理缓存";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 30);
             // 
             // frmMainIDE
             // 
@@ -104,7 +151,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "xinLongyu Studio";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMainIDE_FormClosing);
-            this.Load += new System.EventHandler(this.frmMainIDE_Load);
             this.pnlStatusBar.ResumeLayout(false);
             this.tsrMainForm.ResumeLayout(false);
             this.tsrMainForm.PerformLayout();
@@ -121,5 +167,10 @@
         private System.Windows.Forms.ToolStripButton tsbtnSave;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton tsbtnUpload;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripComboBox tscmbType;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
     }
 }

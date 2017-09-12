@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace xinLongIDE.View.Control
@@ -14,6 +7,7 @@ namespace xinLongIDE.View.Control
     {
 
         public string createName = string.Empty;
+        public string userGroup = string.Empty;
 
         public frmGetInputName()
         {
@@ -25,6 +19,10 @@ namespace xinLongIDE.View.Control
             if (Valid())
             {
                 createName = this.txtName.Text.Trim();
+                if (this.txtUserGroup.Visible)
+                {
+                    userGroup = this.txtUserGroup.Text.Trim();
+                }
                 this.DialogResult = DialogResult.OK;
             }
         }
@@ -41,10 +39,33 @@ namespace xinLongIDE.View.Control
                 MessageBox.Show("名称不能为空");
                 return false;
             }
+            else if (this.txtUserGroup.Visible)
+            {
+                if (string.IsNullOrEmpty(this.txtUserGroup.Text.Trim()))
+                {
+                    MessageBox.Show("用户组不能为空");
+                    return false;
+                }
+            }
             return true;
         }
 
+        public void SetUserGroup(bool isVisible)
+        {
+            this.label2.Visible = isVisible;
+            this.txtUserGroup.Visible = isVisible;
+        }
+
+
         private void txtName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                this.btnOk.PerformClick();
+            }
+        }
+
+        private void txtUserGroup_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {

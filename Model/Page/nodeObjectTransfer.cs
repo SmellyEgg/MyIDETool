@@ -8,6 +8,12 @@
 
         private string pageName = string.Empty;
 
+        private string userGroup = string.Empty;
+
+        private string plat_form = string.Empty;
+
+        private int pageTag;
+
         /// <summary>
         /// 页面ID
         /// </summary>
@@ -50,6 +56,48 @@
             set
             {
                 pageName = value;
+            }
+        }
+
+        public string UserGroup
+        {
+            get
+            {
+                return userGroup;
+            }
+
+            set
+            {
+                userGroup = value;
+            }
+        }
+
+        public string Plat_form
+        {
+            get
+            {
+                return plat_form;
+            }
+
+            set
+            {
+                plat_form = value;
+            }
+        }
+
+        /// <summary>
+        /// 页面唯一标识
+        /// </summary>
+        public int PageTag
+        {
+            get
+            {
+                return pageTag;
+            }
+
+            set
+            {
+                pageTag = value;
             }
         }
     }

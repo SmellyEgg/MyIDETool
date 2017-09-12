@@ -37,9 +37,10 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tsrRefresh = new System.Windows.Forms.ToolStripButton();
             this.tvwOriginal = new System.Windows.Forms.TreeView();
-            this.button1 = new System.Windows.Forms.Button();
             this.prgPageLoad = new System.Windows.Forms.ProgressBar();
             this.tvwPageGroups = new System.Windows.Forms.TreeView();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.tsbtnDeleteNode = new System.Windows.Forms.ToolStripButton();
             this.panel1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -52,7 +53,6 @@
             this.panel1.AutoScroll = true;
             this.panel1.Controls.Add(this.toolStrip1);
             this.panel1.Controls.Add(this.tvwOriginal);
-            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.prgPageLoad);
             this.panel1.Controls.Add(this.tvwPageGroups);
             this.panel1.Location = new System.Drawing.Point(1, 0);
@@ -67,6 +67,8 @@
             this.toolStripSeparator1,
             this.tsrbtnNewGroup,
             this.toolStripSeparator2,
+            this.tsbtnDeleteNode,
+            this.toolStripSeparator3,
             this.tsrRefresh});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -106,12 +108,11 @@
             // 
             // tsrRefresh
             // 
-            this.tsrRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.tsrRefresh.Image = ((System.Drawing.Image)(resources.GetObject("tsrRefresh.Image")));
             this.tsrRefresh.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.tsrRefresh.Name = "tsrRefresh";
-            this.tsrRefresh.Size = new System.Drawing.Size(23, 22);
-            this.tsrRefresh.Text = "toolStripButton3";
+            this.tsrRefresh.Size = new System.Drawing.Size(52, 22);
+            this.tsrRefresh.Text = "刷新";
             this.tsrRefresh.Click += new System.EventHandler(this.tsrRefresh_Click);
             // 
             // tvwOriginal
@@ -127,16 +128,6 @@
             this.tvwOriginal.Size = new System.Drawing.Size(251, 638);
             this.tvwOriginal.TabIndex = 6;
             this.tvwOriginal.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvwOriginal_NodeMouseDoubleClick);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(213, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = " 测试保存";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // prgPageLoad
             // 
@@ -159,6 +150,21 @@
             this.tvwPageGroups.TabIndex = 0;
             this.tvwPageGroups.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.tvwPageGroups_AfterSelect);
             this.tvwPageGroups.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.tvwPageGroups_NodeMouseDoubleClick);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            // 
+            // tsbtnDeleteNode
+            // 
+            this.tsbtnDeleteNode.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.tsbtnDeleteNode.Image = ((System.Drawing.Image)(resources.GetObject("tsbtnDeleteNode.Image")));
+            this.tsbtnDeleteNode.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.tsbtnDeleteNode.Name = "tsbtnDeleteNode";
+            this.tsbtnDeleteNode.Size = new System.Drawing.Size(36, 22);
+            this.tsbtnDeleteNode.Text = "删除";
+            this.tsbtnDeleteNode.Click += new System.EventHandler(this.tsbtnDeleteNode_Click);
             // 
             // frmPageManager
             // 
@@ -183,7 +189,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TreeView tvwPageGroups;
         private System.Windows.Forms.ProgressBar prgPageLoad;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TreeView tvwOriginal;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton tsrbtnNewPage;
@@ -191,5 +196,7 @@
         private System.Windows.Forms.ToolStripButton tsrbtnNewGroup;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton tsrRefresh;
+        private System.Windows.Forms.ToolStripButton tsbtnDeleteNode;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }

@@ -31,11 +31,14 @@
             this.txtName = new System.Windows.Forms.TextBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.txtUserGroup = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(59, 68);
+            this.txtName.Location = new System.Drawing.Point(86, 46);
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(268, 21);
             this.txtName.TabIndex = 0;
@@ -46,7 +49,7 @@
             this.btnOk.Location = new System.Drawing.Point(77, 143);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 1;
+            this.btnOk.TabIndex = 2;
             this.btnOk.Text = "确定";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -56,16 +59,47 @@
             this.btnCancel.Location = new System.Drawing.Point(237, 142);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 2;
+            this.btnCancel.TabIndex = 3;
             this.btnCancel.Text = "取消";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(34, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "名称：";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(30, 95);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(53, 12);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "用户组：";
+            this.label2.Visible = false;
+            // 
+            // txtUserGroup
+            // 
+            this.txtUserGroup.Location = new System.Drawing.Point(86, 90);
+            this.txtUserGroup.Name = "txtUserGroup";
+            this.txtUserGroup.Size = new System.Drawing.Size(268, 21);
+            this.txtUserGroup.TabIndex = 1;
+            this.txtUserGroup.Visible = false;
+            this.txtUserGroup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtUserGroup_KeyDown);
             // 
             // frmGetInputName
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(397, 212);
+            this.Controls.Add(this.txtUserGroup);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.txtName);
@@ -82,5 +116,8 @@
         private System.Windows.Forms.TextBox txtName;
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox txtUserGroup;
     }
 }

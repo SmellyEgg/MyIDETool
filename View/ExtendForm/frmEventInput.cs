@@ -71,7 +71,7 @@ namespace xinLongIDE.View.ExtendForm
                 if (!string.IsNullOrEmpty(line))
                 {
                     string realStr = Function.GetContrastTranslatedStr(line);
-                    realStr = "\"" + realStr + "\"";
+                    realStr = ((char)34) + realStr + ((char)34);
                     list.Add(realStr);
                 }
             }
@@ -91,6 +91,7 @@ namespace xinLongIDE.View.ExtendForm
             for (int i = 0; i < array.Length; i++)
             {
                 //这里需要去除掉双引号
+                array[i] = array[i].Trim();
                 array[i] = array[i].Substring(1, array[i].Length - 2);
                 //转换为正常的字符
                 array[i] = Function.GetTranlatedStr(array[i]);
@@ -257,10 +258,13 @@ namespace xinLongIDE.View.ExtendForm
             {
                 this.rtxEvent.Text = this.rtxEvent.Text.Remove(_searchCharStartIndex, this.rtxEvent.Text.Length - _searchCharStartIndex);
             }
-            this.rtxEvent.Text += lstEventList.SelectedItem.ToString();
-            rtxEvent.SelectionStart = rtxEvent.Text.Length;
-            rtxEvent.SelectionLength = 0;
-            _searchCharStartIndex = -1;
+            if (!object.Equals(lstEventList.SelectedItem, null))
+            {
+                this.rtxEvent.Text += lstEventList.SelectedItem.ToString();
+                rtxEvent.SelectionStart = rtxEvent.Text.Length;
+                rtxEvent.SelectionLength = 0;
+                _searchCharStartIndex = -1;
+            }
         }
 
         /// <summary>

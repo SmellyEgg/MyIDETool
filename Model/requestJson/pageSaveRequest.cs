@@ -21,6 +21,9 @@ namespace xinLongIDE.Model.requestJson
 
     public class pageObjForSavePage
     {
+        //新增id
+        //public int id;
+
         public int page_id = -1;
 
         public string page_name = string.Empty;
@@ -71,13 +74,14 @@ namespace xinLongIDE.Model.requestJson
 
         public string menu_data = string.Empty;
 
-        public string review = string.Empty;
+        public string review = "1";
 
         public string user_group = string.Empty;
 
-        public pageObjForSavePage(int id, string name, int groupid)
+        public pageObjForSavePage(int pageid, string name, int groupid)
         {
-            this.page_id = id;
+            this.page_id = pageid;
+            //this.id = id;
             this.page_name = name;
             this.group_id = groupid;
         }
